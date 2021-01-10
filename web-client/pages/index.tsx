@@ -23,7 +23,7 @@ const callTwirp = async function () {
 
 
 export const Home = (): JSX.Element => {
-  const [session, loading] = useSession();
+  const [authSession, authLoading] = useSession();
 
   return (
     <div className="container">
@@ -41,12 +41,12 @@ export const Home = (): JSX.Element => {
           Get started by editing <code>pages/index.tsx</code>
         </p>
 
-        {!session && <>
+        {!authSession && <>
           Not signed in <br />
           <button onClick={signIn}>Sign in</button>
         </>}
-        {session && <>
-          Signed in as {JSON.stringify(session)} <br />
+        {authSession && <>
+          Signed in as {JSON.stringify(authSession)} <br />
           <button onClick={signOut}>Sign out</button>
         </>}
 

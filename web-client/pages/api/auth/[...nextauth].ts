@@ -7,7 +7,7 @@ const options = {
         jwt: true
     },
     jwt: {
-        secret: process.env.NEXTAUTH_SECRET
+        signingKey: process.env.NEXTAUTH_JWT_SIGNING_KEY
     },
     providers: [
         Providers.Okta({
@@ -23,13 +23,20 @@ const options = {
     callbacks: {
         jwt: async (token, user, account, profile, isNewUser) => {
             const isSignIn = (user) ? true : false
-            if (isSignIn) { 
+            if (isSignIn) {
                 token.idp = account.provider;
-                token.idp_id= account.id;
+                token.idp_id = account.id;
                 token.given_name = profile.given_name;
                 token.family_name = profile.family_name;
-             }
+            }
             return Promise.resolve(token)
+        },
+        session: async (session, user) => {
+            session.user.idp = user.idp;
+            session.user.idp_id = user.idp_id;
+            session.user.given_name = user.given_name;
+            session.user.family_name = user.family_name;
+            return Promise.resolve(session)
         }
     }
 }
