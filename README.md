@@ -38,3 +38,10 @@ As sample app that uses NextJS on the frontend and twirp on the backend. Test ou
 - `protoc --plugin=./node_modules/.bin/protoc-gen-ts --ts_out ./generated --proto_path ../protobufs ../protobufs/*.proto`
 - `npm run dev`
 - Go to `http://localhost:3000`
+
+
+# Heroku Setup
+- install heroku cli
+- `create next-twirp-test --remote heroku`
+- `heroku stack:set -a next-twirp-test container`
+- `git push heroku`
