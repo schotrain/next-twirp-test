@@ -7,7 +7,7 @@ import { HaberdasherClient, Hat } from '../generated/haberdasher'
 const callTwirp = async function () {
   // setup a transport and create a client instance
   let transport = new TwirpFetchTransport({
-    baseUrl: "http://localhost:3001/twirp"
+    baseUrl: process.env.NEXT_PUBLIC_TWIRP_ENDPOINT
   });
   let client = new HaberdasherClient(transport);
 
