@@ -2,7 +2,7 @@ FROM python:3.7-alpine
 RUN mkdir /app
 WORKDIR /app
 
-RUN apk add --no-cache protoc gcc build-base
+RUN apk add --no-cache protoc gcc build-base libffi-dev
 
 RUN pip install poetry
 RUN poetry config settings.virtualenvs.create false
