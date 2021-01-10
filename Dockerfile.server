@@ -1,10 +1,6 @@
 FROM python:3.9-alpine
 RUN mkdir /app
-RUN mkdir /gopath
 WORKDIR /app
-
-ENV GOPATH /gopath
-ENV PATH ${GOPATH}:$PATH
 
 RUN apk add --no-cache protoc gcc build-base libffi-dev openssl-dev go git
 RUN go get github.com/verloop/twirpy/protoc-gen-twirpy
@@ -15,7 +11,7 @@ RUN poetry config virtualenvs.create false --local
 COPY server /app
 COPY protobufs /app/protobufs
 
-RUN protoc --python_out=./generated --twirpy_out=./generated --proto_path=./protobufs ./protobufs/*.proto
+RUN protoc --plugin=~/go/bin/protoc-gen-twirpy --python_out=./generated --twirpy_out=./generated --proto_path=./protobufs ./protobufs/*.proto
 RUN poetry install
 
 EXPOSE 3001
