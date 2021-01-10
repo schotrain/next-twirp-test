@@ -17,5 +17,5 @@ COPY protobufs /app/protobufs
 RUN protoc --plugin=/go/bin/protoc-gen-twirpy --python_out=./generated --twirpy_out=./generated --proto_path=./protobufs ./protobufs/*.proto
 RUN poetry install
 
-EXPOSE 3001
+EXPOSE $PORT
 CMD poetry run uvicorn server:app --port=$PORT
