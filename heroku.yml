@@ -1,0 +1,4 @@
+build:
+  docker:
+    twirp-server: server/Dockerfile
+    next-web-server: web-clent/Dockerfile
