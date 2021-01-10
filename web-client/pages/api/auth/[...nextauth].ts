@@ -1,5 +1,6 @@
 import NextAuth from 'next-auth'
 import Providers from 'next-auth/providers'
+import jwt from 'jsonwebtoken'
 
 const options = {
     secret: process.env.NEXTAUTH_SECRET,
@@ -7,7 +8,16 @@ const options = {
         jwt: true
     },
     jwt: {
-        signingKey: process.env.NEXTAUTH_JWT_SIGNING_KEY
+        encode: async ({ secret, token, maxAge }) => { 
+            const signingOptions = {algorithm: 'HS512'} as any
+            if (!token.exp) {
+                signingOptions.expiresIn = maxAge
+            }
+            return jwt.sign(token, secret, signingOptions)
+        },
+        decode: async ({ secret, token, maxAge }) => { 
+            return jwt.verify(token, secret)
+        }
     },
     providers: [
         Providers.Okta({
