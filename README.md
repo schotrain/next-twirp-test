@@ -15,7 +15,7 @@ As sample app that uses NextJS on the frontend and twirp on the backend. Test ou
     export GOROOT="$(brew --prefix golang)/libexec"
     export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
     ```
-- `go install protoc-gen-twirpy@latest`
+- `go get github.com/verloop/twirpy/protoc-gen-twirpy`
 
 ### Server
 - `cd server`
