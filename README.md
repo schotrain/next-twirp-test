@@ -33,6 +33,7 @@ As sample app that uses NextJS on the frontend and twirp on the backend. Test ou
 ### web-client
 - `nvm use 15`
 - `cd web-client`
+- copy `.env.template` to `.env.local` and fill out variables
 - `npm ci`
 - `protoc --plugin=./node_modules/.bin/protoc-gen-ts --ts_out ./generated --proto_path ../protobufs ../protobufs/*.proto`
 - `npm run dev`

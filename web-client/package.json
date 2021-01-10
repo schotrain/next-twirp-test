@@ -24,6 +24,7 @@
     "@protobuf-ts/protoc": "^1.0.12",
     "@protobuf-ts/twirp-transport": "^1.0.12",
     "next": "latest",
+    "next-auth": "^3.1.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
