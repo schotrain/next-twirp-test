@@ -11,7 +11,7 @@ COPY server /app
 COPY protobufs /app/protobufs
 
 RUN poetry install
-RUN protoc --python_out=./generated --twirpy_out=./generated --proto_path=../protobufs ../protobufs/*.proto
+RUN protoc --python_out=./generated --twirpy_out=./generated --proto_path=./protobufs ./protobufs/*.proto
 
 EXPOSE 3001
 CMD [ "poetry ", "run", "uvicorn", "server:app", "--port=3001" ]
