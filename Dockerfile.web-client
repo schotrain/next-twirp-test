@@ -14,4 +14,4 @@ RUN protoc --plugin=./node_modules/.bin/protoc-gen-ts --ts_out ./generated --pro
 RUN npm run build
 
 EXPOSE 3000
-CMD [ "npm", "start" ]
+CMD npm run start -p $PORT
