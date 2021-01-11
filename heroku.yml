@@ -1,4 +1,4 @@
 build:
   docker:
-    twirp: ./Dockerfile.server
-    web: ./Dockerfile.web-client
+    twirp: ./Dockerfile.twirp-app
+    web: ./Dockerfile.next-app

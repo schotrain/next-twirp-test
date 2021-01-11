@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 
 RUN apk add --no-cache protoc
 
-COPY web-client /usr/src/app
+COPY next-app /usr/src/app
 COPY protobufs /usr/src/app/protobufs
 
 RUN npm ci 

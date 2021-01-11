@@ -17,8 +17,8 @@ As sample app that uses NextJS on the frontend and twirp on the backend. Test ou
     ```
 - `go get github.com/verloop/twirpy/protoc-gen-twirpy`
 
-### Server
-- `cd server`
+### twirp-app
+- `cd twirp-app`
 - `poetry install`
 - `protoc --python_out=./generated --twirpy_out=./generated --proto_path=../protobufs ../protobufs/*.proto`
 - `poetry run uvicorn server:app --port=3001`
@@ -30,9 +30,9 @@ As sample app that uses NextJS on the frontend and twirp on the backend. Test ou
         http://localhost:3001/twirp/twirp.example.haberdasher.Haberdasher/MakeHat
     ```
 
-### web-client
+### next-app
 - `nvm use 15`
-- `cd web-client`
+- `cd next-app`
 - copy `.env.template` to `.env.local` and fill out variables
 - `npm ci`
 - `protoc --plugin=./node_modules/.bin/protoc-gen-ts --ts_out ./generated --proto_path ../protobufs ../protobufs/*.proto`

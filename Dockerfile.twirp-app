@@ -11,7 +11,7 @@ RUN go get github.com/verloop/twirpy/protoc-gen-twirpy
 RUN pip install poetry
 RUN poetry config virtualenvs.create false --local
 
-COPY server /app
+COPY twirp-app /app
 COPY protobufs /app/protobufs
 
 RUN protoc --plugin=/go/bin/protoc-gen-twirpy --python_out=./generated --twirpy_out=./generated --proto_path=./protobufs ./protobufs/*.proto
