@@ -1,4 +1,7 @@
 FROM node:15-alpine
+
+ARG NEXT_PUBLIC_TWIRP_ENDPOINT
+
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
