@@ -1,9 +1,11 @@
 import random
-
+import os
 from twirp.asgi import TwirpASGIApp
 from twirp.exceptions import InvalidArgument
-
 from generated import haberdasher_twirp, haberdasher_pb2
+from dotenv import load_dotenv
+
+load_dotenv(dotenv_path='.env.local')
 
 class HaberdasherService(object):
     def MakeHat(self, context, size):
@@ -19,7 +21,7 @@ class HaberdasherService(object):
 
 class CORSTwirpASGIApp(TwirpASGIApp):
     async def _respond(self, send, status, headers, body_bytes):
-        headers["Access-Control-Allow-Origin"] = "*"
+        headers["Access-Control-Allow-Origin"] = os.getenv("CORS_HOSTS")
         headers["Access-Control-Allow-Headers"] = "*"
         await super()._respond(send=send, status=status, headers=headers, body_bytes=body_bytes)
 

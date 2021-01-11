@@ -19,6 +19,7 @@ As sample app that uses NextJS on the frontend and twirp on the backend. Test ou
 
 ### twirp-app
 - `cd twirp-app`
+- copy `.env.template` to `.env.local` and fill out variables
 - `poetry install`
 - `./bin/run-dev.sh`
 - Test with 
