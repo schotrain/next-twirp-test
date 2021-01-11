@@ -12,4 +12,4 @@ COPY . /app
 RUN poetry install
 
 EXPOSE $PORT
-CMD poetry run uvicorn server:app --port=$PORT
+CMD poetry run uvicorn server:app --host 0.0.0.0 --port=$PORT
