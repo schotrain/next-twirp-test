@@ -1,0 +1,15 @@
+FROM python:3.9-alpine
+RUN mkdir /app
+WORKDIR /app
+
+RUN apk add --no-cache protoc gcc build-base libffi-dev openssl-dev 
+
+RUN pip install poetry
+RUN poetry config virtualenvs.create false --local
+
+COPY . /app
+
+RUN poetry install
+
+EXPOSE $PORT
+CMD poetry run uvicorn server:app --port=$PORT

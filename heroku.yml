@@ -1,4 +1,0 @@
-build:
-  docker:
-    twirp: ./Dockerfile.twirp-app
-    web: ./Dockerfile.next-app

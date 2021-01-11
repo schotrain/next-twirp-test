@@ -20,8 +20,7 @@ As sample app that uses NextJS on the frontend and twirp on the backend. Test ou
 ### twirp-app
 - `cd twirp-app`
 - `poetry install`
-- `protoc --python_out=./generated --twirpy_out=./generated --proto_path=../protobufs ../protobufs/*.proto`
-- `poetry run uvicorn server:app --port=3001`
+- `./bin/run-dev.sh`
 - Test with 
     ```
     curl --request "POST" \
@@ -35,13 +34,13 @@ As sample app that uses NextJS on the frontend and twirp on the backend. Test ou
 - `cd next-app`
 - copy `.env.template` to `.env.local` and fill out variables
 - `npm ci`
-- `protoc --plugin=./node_modules/.bin/protoc-gen-ts --ts_out ./generated --proto_path ../protobufs ../protobufs/*.proto`
-- `npm run dev`
+- `./bin/run-dev.sh`
 - Go to `http://localhost:3000`
 
 
 # Heroku Setup
 - install heroku cli
-- `create next-twirp-test --remote heroku`
-- `heroku stack:set -a next-twirp-test container`
-- `git push heroku`
+- `heroku create next-twirp-test-next-app --remote heroku-next-app`
+- `heroku stack:set -a next-twirp-test-next-app container`
+- `heroku create next-twirp-test-twirp-app --remote heroku-twirp-app`
+- `heroku stack:set -a next-twirp-test-twirp-app container`
