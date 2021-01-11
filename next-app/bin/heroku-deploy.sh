@@ -1,3 +1,4 @@
 #!/bin/bash
 . bin/build-protobufs.sh
-git subtree push --prefix web heroku-next-app master
+cd ..
+git subtree push --prefix next-app heroku-next-app master
