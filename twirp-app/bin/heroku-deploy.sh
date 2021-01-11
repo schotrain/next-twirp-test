@@ -1,3 +1,4 @@
 #!/bin/bash
 . bin/build-protobufs.sh
-git subtree push --prefix web heroku-twirp-app master
+cd ..
+git subtree push --prefix twirp-app heroku-twirp-app master
