@@ -26,7 +26,7 @@ As sample app that uses NextJS on the frontend and twirp on the backend. Test ou
     curl --request "POST" \
         --header "Content-Type: application/json" \
         --data '{"inches":"2"}' \
-        http://localhost:3001/twirp/twirp.example.haberdasher.Haberdasher/MakeHat
+        https://next-twirp-test-twirp-app.herokuapp.com//twirp/twirp.example.haberdasher.Haberdasher/MakeHat
     ```
 
 ### next-app
