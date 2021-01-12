@@ -1,5 +1,5 @@
 build:
   config:
-    NEXT_PUBLIC_TWIRP_ENDPOINT: 'https://next-twirp-test-twirp-app.herokuapp.com/twirp'
+    NEXT_PUBLIC_TWIRP_ENDPOINT: 'https://next-twirp-test-twirp-app.herokuapp.com/rpc'
   docker:
     web: ./Dockerfile
