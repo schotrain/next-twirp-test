@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package nextTwirpTest.user;
+option go_package = "user";
+
+service User {
+  rpc Login(LoginRequest) returns (LoginResponse);
+}
+
+message UserData {
+  string id = 1;
+  string email = 2;
+  string givenName = 3;
+  string familyName = 4;
+  string imageUrl = 5;
+}
+
+enum IdentityProvider {
+  GOOGLE = 0;
+  OKTA = 1;
+}
+
+message LoginRequest {
+  IdentityProvider identityProvider = 1;
+  string accessToken = 2;
+}
+
+message LoginResponse {
+  UserData userData = 1;
+}

@@ -1,5 +1,6 @@
 import random
 from generated import haberdasher_pb2
+from twirp.exceptions import InvalidArgument
 
 class HaberdasherService(object):
     def MakeHat(self, context, size):

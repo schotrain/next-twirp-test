@@ -1,9 +1,9 @@
 import os
 from twirp.asgi import TwirpASGIApp
-from twirp.exceptions import InvalidArgument
-from generated import haberdasher_pb2, haberdasher_twirp
+from generated import haberdasher_twirp, user_twirp
 from dotenv import load_dotenv
 from server.haberdasherImpl import HaberdasherService
+from server.userImpl import UserService
 
 load_dotenv(dotenv_path='.env.local')
 
@@ -24,9 +24,20 @@ class CORSTwirpASGIApp(TwirpASGIApp):
                 body_bytes=bytes()
             )
         else:
+            ctx = self._ctx_class()
+
+            headers = {k.decode('utf-8'): v.decode('utf-8') for (k,v) in scope['headers']}
+            if "authorization" in headers:
+                print(headers['authorization'])
+
             await super().__call__(scope, receive, send)
 
 
-service = haberdasher_twirp.HaberdasherServer(service=HaberdasherService(), server_path_prefix="/rpc")
+
 app = CORSTwirpASGIApp()
-app.add_service(service)
+
+haberdasherService = haberdasher_twirp.HaberdasherServer(service=HaberdasherService(), server_path_prefix="/rpc")
+app.add_service(haberdasherService)
+
+userService = user_twirp.UserServer(service=UserService(), server_path_prefix="/rpc")
+app.add_service(userService)

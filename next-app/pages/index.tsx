@@ -1,22 +1,14 @@
 import Head from 'next/head'
 import React from 'react'
-import { signIn, signOut, useSession } from 'next-auth/client'
-import { TwirpFetchTransport } from '@protobuf-ts/twirp-transport'
-import { HaberdasherClient, Hat } from '../generated/haberdasher'
+import { signIn, signOut, useSession,  } from 'next-auth/client'
+import { Hat } from '../generated/haberdasher'
+import { getHaberdasherClient } from '../lib/twirpTransport'
+
 
 const callTwirp = async function () {
-  // setup a transport and create a client instance
-  let transport = new TwirpFetchTransport({
-    baseUrl: process.env.NEXT_PUBLIC_TWIRP_ENDPOINT
-  });
-  let client = new HaberdasherClient(transport);
-
-  // make a hat
+  let client = getHaberdasherClient('asdf')
   let call = await client.makeHat({ inches: 23 });
-
-  // our shiny new hat:
   let response: Hat = call.response;
-
   return response;
 }
 
