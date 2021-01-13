@@ -41,24 +41,28 @@ export interface UserData {
     imageUrl: string;
 }
 /**
- * @generated from protobuf message nextTwirpTest.user.LoginRequest
+ * @generated from protobuf message nextTwirpTest.user.TokenExchangeRequest
  */
-export interface LoginRequest {
+export interface TokenExchangeRequest {
     /**
      * @generated from protobuf field: nextTwirpTest.user.IdentityProvider identityProvider = 1;
      */
     identityProvider: IdentityProvider;
     /**
-     * @generated from protobuf field: string accessToken = 2;
+     * @generated from protobuf field: string idpAccessToken = 2;
      */
-    accessToken: string;
+    idpAccessToken: string;
 }
 /**
- * @generated from protobuf message nextTwirpTest.user.LoginResponse
+ * @generated from protobuf message nextTwirpTest.user.TokenExchangeResponse
  */
-export interface LoginResponse {
+export interface TokenExchangeResponse {
     /**
-     * @generated from protobuf field: nextTwirpTest.user.UserData userData = 1;
+     * @generated from protobuf field: string accessToken = 1;
+     */
+    accessToken: string;
+    /**
+     * @generated from protobuf field: nextTwirpTest.user.UserData userData = 2;
      */
     userData?: UserData;
 }
@@ -80,9 +84,9 @@ export enum IdentityProvider {
  */
 export interface IUserClient {
     /**
-     * @generated from protobuf rpc: Login(nextTwirpTest.user.LoginRequest) returns (nextTwirpTest.user.LoginResponse);
+     * @generated from protobuf rpc: TokenExchange(nextTwirpTest.user.TokenExchangeRequest) returns (nextTwirpTest.user.TokenExchangeResponse);
      */
-    login(input: LoginRequest, options?: RpcOptions): UnaryCall<LoginRequest, LoginResponse>;
+    tokenExchange(input: TokenExchangeRequest, options?: RpcOptions): UnaryCall<TokenExchangeRequest, TokenExchangeResponse>;
 }
 /**
  * Type for protobuf message nextTwirpTest.user.UserData
@@ -158,22 +162,22 @@ class UserData$Type extends MessageType<UserData> {
 }
 export const UserData = new UserData$Type();
 /**
- * Type for protobuf message nextTwirpTest.user.LoginRequest
+ * Type for protobuf message nextTwirpTest.user.TokenExchangeRequest
  */
-class LoginRequest$Type extends MessageType<LoginRequest> {
+class TokenExchangeRequest$Type extends MessageType<TokenExchangeRequest> {
     constructor() {
-        super("nextTwirpTest.user.LoginRequest", [
+        super("nextTwirpTest.user.TokenExchangeRequest", [
             { no: 1, name: "identityProvider", kind: "enum", T: () => ["nextTwirpTest.user.IdentityProvider", IdentityProvider] },
-            { no: 2, name: "accessToken", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "idpAccessToken", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<LoginRequest>): LoginRequest {
-        const message = { identityProvider: 0, accessToken: "" };
+    create(value?: PartialMessage<TokenExchangeRequest>): TokenExchangeRequest {
+        const message = { identityProvider: 0, idpAccessToken: "" };
         if (value !== undefined)
-            reflectionMergePartial<LoginRequest>(this, message, value);
+            reflectionMergePartial<TokenExchangeRequest>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: LoginRequest): LoginRequest {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: TokenExchangeRequest): TokenExchangeRequest {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -181,8 +185,8 @@ class LoginRequest$Type extends MessageType<LoginRequest> {
                 case /* nextTwirpTest.user.IdentityProvider identityProvider */ 1:
                     message.identityProvider = reader.int32();
                     break;
-                case /* string accessToken */ 2:
-                    message.accessToken = reader.string();
+                case /* string idpAccessToken */ 2:
+                    message.idpAccessToken = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -195,41 +199,45 @@ class LoginRequest$Type extends MessageType<LoginRequest> {
         }
         return message;
     }
-    internalBinaryWrite(message: LoginRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: TokenExchangeRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* nextTwirpTest.user.IdentityProvider identityProvider = 1; */
         if (message.identityProvider !== 0)
             writer.tag(1, WireType.Varint).int32(message.identityProvider);
-        /* string accessToken = 2; */
-        if (message.accessToken !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.accessToken);
+        /* string idpAccessToken = 2; */
+        if (message.idpAccessToken !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.idpAccessToken);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
         return writer;
     }
 }
-export const LoginRequest = new LoginRequest$Type();
+export const TokenExchangeRequest = new TokenExchangeRequest$Type();
 /**
- * Type for protobuf message nextTwirpTest.user.LoginResponse
+ * Type for protobuf message nextTwirpTest.user.TokenExchangeResponse
  */
-class LoginResponse$Type extends MessageType<LoginResponse> {
+class TokenExchangeResponse$Type extends MessageType<TokenExchangeResponse> {
     constructor() {
-        super("nextTwirpTest.user.LoginResponse", [
-            { no: 1, name: "userData", kind: "message", T: () => UserData }
+        super("nextTwirpTest.user.TokenExchangeResponse", [
+            { no: 1, name: "accessToken", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "userData", kind: "message", T: () => UserData }
         ]);
     }
-    create(value?: PartialMessage<LoginResponse>): LoginResponse {
-        const message = {};
+    create(value?: PartialMessage<TokenExchangeResponse>): TokenExchangeResponse {
+        const message = { accessToken: "" };
         if (value !== undefined)
-            reflectionMergePartial<LoginResponse>(this, message, value);
+            reflectionMergePartial<TokenExchangeResponse>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: LoginResponse): LoginResponse {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: TokenExchangeResponse): TokenExchangeResponse {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* nextTwirpTest.user.UserData userData */ 1:
+                case /* string accessToken */ 1:
+                    message.accessToken = reader.string();
+                    break;
+                case /* nextTwirpTest.user.UserData userData */ 2:
                     message.userData = UserData.internalBinaryRead(reader, reader.uint32(), options, message.userData);
                     break;
                 default:
@@ -243,29 +251,32 @@ class LoginResponse$Type extends MessageType<LoginResponse> {
         }
         return message;
     }
-    internalBinaryWrite(message: LoginResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* nextTwirpTest.user.UserData userData = 1; */
+    internalBinaryWrite(message: TokenExchangeResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string accessToken = 1; */
+        if (message.accessToken !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.accessToken);
+        /* nextTwirpTest.user.UserData userData = 2; */
         if (message.userData)
-            UserData.internalBinaryWrite(message.userData, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+            UserData.internalBinaryWrite(message.userData, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
         return writer;
     }
 }
-export const LoginResponse = new LoginResponse$Type();
+export const TokenExchangeResponse = new TokenExchangeResponse$Type();
 /**
  * @generated from protobuf service nextTwirpTest.user.User
  */
 export class UserClient implements IUserClient {
     readonly typeName = "nextTwirpTest.user.User";
     readonly methods: MethodInfo[] = [
-        { service: this, name: "Login", localName: "login", I: LoginRequest, O: LoginResponse }
+        { service: this, name: "TokenExchange", localName: "tokenExchange", I: TokenExchangeRequest, O: TokenExchangeResponse }
     ];
     constructor(private readonly _transport: RpcTransport) {
     }
-    login(input: LoginRequest, options?: RpcOptions): UnaryCall<LoginRequest, LoginResponse> {
+    tokenExchange(input: TokenExchangeRequest, options?: RpcOptions): UnaryCall<TokenExchangeRequest, TokenExchangeResponse> {
         const method = this.methods[0], opt = this._transport.mergeOptions(options), i = method.I.create(input);
-        return stackIntercept<LoginRequest, LoginResponse>("unary", this._transport, method, opt, i);
+        return stackIntercept<TokenExchangeRequest, TokenExchangeResponse>("unary", this._transport, method, opt, i);
     }
 }

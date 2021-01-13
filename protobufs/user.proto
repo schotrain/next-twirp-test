@@ -3,10 +3,6 @@ syntax = "proto3";
 package nextTwirpTest.user;
 option go_package = "user";
 
-service User {
-  rpc Login(LoginRequest) returns (LoginResponse);
-}
-
 message UserData {
   string id = 1;
   string email = 2;
@@ -20,11 +16,16 @@ enum IdentityProvider {
   OKTA = 1;
 }
 
-message LoginRequest {
-  IdentityProvider identityProvider = 1;
-  string accessToken = 2;
+service User {
+  rpc TokenExchange(TokenExchangeRequest) returns (TokenExchangeResponse);
 }
 
-message LoginResponse {
-  UserData userData = 1;
+message TokenExchangeRequest {
+  IdentityProvider identityProvider = 1;
+  string idpAccessToken = 2;
+}
+
+message TokenExchangeResponse {
+  string accessToken = 1;
+  UserData userData = 2;
 }

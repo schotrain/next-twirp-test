@@ -16,22 +16,22 @@ class UserServer(TwirpServer):
 		super().__init__(service=service)
 		self._prefix = F"{server_path_prefix}/nextTwirpTest.user.User"
 		self._endpoints = {
-			"Login": Endpoint(
+			"TokenExchange": Endpoint(
 				service_name="User",
-				name="Login",
-				function=getattr(service, "Login"),
-				input=_sym_db.GetSymbol("nextTwirpTest.user.LoginRequest"),
-				output=_sym_db.GetSymbol("nextTwirpTest.user.LoginResponse"),
+				name="TokenExchange",
+				function=getattr(service, "TokenExchange"),
+				input=_sym_db.GetSymbol("nextTwirpTest.user.TokenExchangeRequest"),
+				output=_sym_db.GetSymbol("nextTwirpTest.user.TokenExchangeResponse"),
 			),
 		}
 
 class UserClient(TwirpClient):
 
-	def Login(self, *args, ctx, request, server_path_prefix="/twirp", **kwargs):
+	def TokenExchange(self, *args, ctx, request, server_path_prefix="/twirp", **kwargs):
 		return self._make_request(
-			url=F"{server_path_prefix}/nextTwirpTest.user.User/Login",
+			url=F"{server_path_prefix}/nextTwirpTest.user.User/TokenExchange",
 			ctx=ctx,
 			request=request,
-			response_obj=_sym_db.GetSymbol("nextTwirpTest.user.LoginResponse"),
+			response_obj=_sym_db.GetSymbol("nextTwirpTest.user.TokenExchangeResponse"),
 			**kwargs,
 		)

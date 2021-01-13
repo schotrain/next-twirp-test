@@ -1,49 +1,66 @@
+import uuid
+import requests
 from generated import user_pb2
 from twirp.exceptions import InvalidArgument, TwirpServerException
 
 class UserService(object):
     def _lookupGoogleIdentity(self, accessToken):
-        # TODO implement this. Probably move it as well to an identity provider package
-        print("Looking up google data " + accessToken)
+        identityServer = "https://www.googleapis.com/oauth2/v1/userinfo?alt=json"
+        r = requests.get(identityServer, headers={'Authorization': 'Bearer ' + accessToken})
+        if r.status_code != requests.codes.ok:
+            return None
+        jsonData = r.json()
+        
         return {
-            'givenName': 'FirstG',
-            'familyName': 'LastG',
-            'email': 'test@google.com',
-            'imageUrl': 'www.google.com/image'
+            'givenName': jsonData["given_name"],
+            'familyName': jsonData["family_name"],
+            'email': jsonData["email"],
+            'imageUrl': jsonData["picture"]
         }
+
 
     def _lookupOktaIdentity(self, accessToken):
-        # TODO implement this. Probably move it as well to an identity provider package
-        print("Looking up okta data " + accessToken)
+        identityServer = "https://dev-9242554.okta.com/oauth2/v1/userinfo"
+        r = requests.get(identityServer, headers={'Authorization': 'Bearer ' + accessToken})
+        if r.status_code != requests.codes.ok:
+            return None
+        jsonData = r.json()
+
         return {
-            'givenName': 'FirstO',
-            'familyName': 'LastO',
-            'email': 'test@okta.com',
-            'imageUrl': 'www.okta.com/image'
+            'givenName': jsonData["given_name"],
+            'familyName': jsonData["family_name"],
+            'email': jsonData["email"],
+            'imageUrl': ""
         }
 
-    def Login(self, context, loginRequest):
+
+    def TokenExchange(self, context, tokenExcangeRequest):
         #TODO document and test this. Also encrypt a key for future API calls
-        if loginRequest.identityProvider == None:
+        if tokenExcangeRequest.identityProvider == None:
             raise InvalidArgument(argument="identityProvider", error="Invalid identity provider")
-        if loginRequest.accessToken == None:
-            raise InvalidArgument(argument="accessToken", error="Invalid accessToken")
+        if tokenExcangeRequest.idpAccessToken == None:
+            raise InvalidArgument(argument="idpAccessToken", error="Invalid idpAccessToken")
         
         userData = None
-        if loginRequest.identityProvider == user_pb2.IdentityProvider.GOOGLE:
-            userData = self._lookupGoogleIdentity(loginRequest.accessToken)
-        if loginRequest.identityProvider == user_pb2.IdentityProvider.OKTA:
-            userData = self._lookupOktaIdentity(loginRequest.accessToken)
+        if tokenExcangeRequest.identityProvider == user_pb2.IdentityProvider.GOOGLE:
+            userData = self._lookupGoogleIdentity(tokenExcangeRequest.idpAccessToken)
+        if tokenExcangeRequest.identityProvider == user_pb2.IdentityProvider.OKTA:
+            userData = self._lookupOktaIdentity(tokenExcangeRequest.idpAccessToken)
 
         if userData == None:
             raise TwirpServerException(code="UserLookup", message="Error lookup up user data")
 
-        return user_pb2.LoginResponse(
+        accessToken = str(uuid.uuid4())
+
+        # TODO store this in a session db or redis or something
+
+        return user_pb2.TokenExchangeResponse(
             userData=user_pb2.UserData(
                 id="asdf",
                 email=userData['email'],
                 givenName=userData['givenName'],
                 familyName=userData['familyName'],
                 imageUrl=userData['imageUrl']
-            )
+            ),
+            accessToken=accessToken
         )

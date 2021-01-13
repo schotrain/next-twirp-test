@@ -9,17 +9,6 @@ const options = {
     session: {
         jwt: true
     },
-    jwt: {
-        encode: async ({ secret, token, maxAge }) => { 
-            const signingOptions = {algorithm: 'HS512'} as any
-            delete token.exp
-            signingOptions.expiresIn = maxAge
-            return jwt.sign(token, secret, signingOptions)
-        },
-        decode: async ({ secret, token, maxAge }) => { 
-            return jwt.verify(token, secret)
-        }
-    },
     providers: [
         Providers.Okta({
             clientId: process.env.AUTH_OKTA_CLIENTID,
@@ -32,6 +21,7 @@ const options = {
         }),
     ],
     callbacks: {
+        // Custom logic that will exchange the IDP access token for an API server access token during login
         jwt: async (token, user, account, profile, isNewUser) => {
             const isSignIn = (user) ? true : false
             if (isSignIn) {
@@ -39,18 +29,20 @@ const options = {
                 if (account.provider === 'google') identityProvider = IdentityProvider.GOOGLE;
                 if (account.provider === 'okta') identityProvider = IdentityProvider.OKTA;
 
-                const loginData = await getUserClient().login({
+                const loginData = await getUserClient().tokenExchange({
                     identityProvider,
-                    accessToken: account.accessToken
+                    idpAccessToken: account.accessToken
                 })
                 token.userId = loginData.response.userData.id;
                 token.email = loginData.response.userData.email;
                 token.given_name = loginData.response.userData.givenName;
                 token.family_name = loginData.response.userData.familyName;
                 token.imageUrl = loginData.response.userData.imageUrl;
+                token.rpcAccessToken = loginData.response.accessToken
             } 
             return Promise.resolve(token)
         },
+        // Custom logic that will pull values from our custom token into the session
         session: async (session, user) => {
             delete session.user.image
             session.user.id = user.userId;
@@ -58,6 +50,7 @@ const options = {
             session.user.given_name = user.given_name;
             session.user.family_name = user.family_name;
             session.user.imageUrl = user.imageUrl;
+            session.rpcAccessToken = user.rpcAccessToken
             return Promise.resolve(session)
         }
     }

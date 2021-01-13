@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'Z\004user',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\nuser.proto\x12\x12nextTwirpTest.user\"^\n\x08UserData\x12\n\n\x02id\x18\x01 \x01(\t\x12\r\n\x05\x65mail\x18\x02 \x01(\t\x12\x11\n\tgivenName\x18\x03 \x01(\t\x12\x12\n\nfamilyName\x18\x04 \x01(\t\x12\x10\n\x08imageUrl\x18\x05 \x01(\t\"c\n\x0cLoginRequest\x12>\n\x10identityProvider\x18\x01 \x01(\x0e\x32$.nextTwirpTest.user.IdentityProvider\x12\x13\n\x0b\x61\x63\x63\x65ssToken\x18\x02 \x01(\t\"?\n\rLoginResponse\x12.\n\x08userData\x18\x01 \x01(\x0b\x32\x1c.nextTwirpTest.user.UserData*(\n\x10IdentityProvider\x12\n\n\x06GOOGLE\x10\x00\x12\x08\n\x04OKTA\x10\x01\x32T\n\x04User\x12L\n\x05Login\x12 .nextTwirpTest.user.LoginRequest\x1a!.nextTwirpTest.user.LoginResponseB\x06Z\x04userb\x06proto3'
+  serialized_pb=b'\n\nuser.proto\x12\x12nextTwirpTest.user\"^\n\x08UserData\x12\n\n\x02id\x18\x01 \x01(\t\x12\r\n\x05\x65mail\x18\x02 \x01(\t\x12\x11\n\tgivenName\x18\x03 \x01(\t\x12\x12\n\nfamilyName\x18\x04 \x01(\t\x12\x10\n\x08imageUrl\x18\x05 \x01(\t\"n\n\x14TokenExchangeRequest\x12>\n\x10identityProvider\x18\x01 \x01(\x0e\x32$.nextTwirpTest.user.IdentityProvider\x12\x16\n\x0eidpAccessToken\x18\x02 \x01(\t\"\\\n\x15TokenExchangeResponse\x12\x13\n\x0b\x61\x63\x63\x65ssToken\x18\x01 \x01(\t\x12.\n\x08userData\x18\x02 \x01(\x0b\x32\x1c.nextTwirpTest.user.UserData*(\n\x10IdentityProvider\x12\n\n\x06GOOGLE\x10\x00\x12\x08\n\x04OKTA\x10\x01\x32l\n\x04User\x12\x64\n\rTokenExchange\x12(.nextTwirpTest.user.TokenExchangeRequest\x1a).nextTwirpTest.user.TokenExchangeResponseB\x06Z\x04userb\x06proto3'
 )
 
 _IDENTITYPROVIDER = _descriptor.EnumDescriptor(
@@ -43,8 +43,8 @@ _IDENTITYPROVIDER = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=296,
-  serialized_end=336,
+  serialized_start=336,
+  serialized_end=376,
 )
 _sym_db.RegisterEnumDescriptor(_IDENTITYPROVIDER)
 
@@ -114,23 +114,23 @@ _USERDATA = _descriptor.Descriptor(
 )
 
 
-_LOGINREQUEST = _descriptor.Descriptor(
-  name='LoginRequest',
-  full_name='nextTwirpTest.user.LoginRequest',
+_TOKENEXCHANGEREQUEST = _descriptor.Descriptor(
+  name='TokenExchangeRequest',
+  full_name='nextTwirpTest.user.TokenExchangeRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='identityProvider', full_name='nextTwirpTest.user.LoginRequest.identityProvider', index=0,
+      name='identityProvider', full_name='nextTwirpTest.user.TokenExchangeRequest.identityProvider', index=0,
       number=1, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='accessToken', full_name='nextTwirpTest.user.LoginRequest.accessToken', index=1,
+      name='idpAccessToken', full_name='nextTwirpTest.user.TokenExchangeRequest.idpAccessToken', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -149,21 +149,28 @@ _LOGINREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=130,
-  serialized_end=229,
+  serialized_end=240,
 )
 
 
-_LOGINRESPONSE = _descriptor.Descriptor(
-  name='LoginResponse',
-  full_name='nextTwirpTest.user.LoginResponse',
+_TOKENEXCHANGERESPONSE = _descriptor.Descriptor(
+  name='TokenExchangeResponse',
+  full_name='nextTwirpTest.user.TokenExchangeResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='userData', full_name='nextTwirpTest.user.LoginResponse.userData', index=0,
-      number=1, type=11, cpp_type=10, label=1,
+      name='accessToken', full_name='nextTwirpTest.user.TokenExchangeResponse.accessToken', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='userData', full_name='nextTwirpTest.user.TokenExchangeResponse.userData', index=1,
+      number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -180,15 +187,15 @@ _LOGINRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=231,
-  serialized_end=294,
+  serialized_start=242,
+  serialized_end=334,
 )
 
-_LOGINREQUEST.fields_by_name['identityProvider'].enum_type = _IDENTITYPROVIDER
-_LOGINRESPONSE.fields_by_name['userData'].message_type = _USERDATA
+_TOKENEXCHANGEREQUEST.fields_by_name['identityProvider'].enum_type = _IDENTITYPROVIDER
+_TOKENEXCHANGERESPONSE.fields_by_name['userData'].message_type = _USERDATA
 DESCRIPTOR.message_types_by_name['UserData'] = _USERDATA
-DESCRIPTOR.message_types_by_name['LoginRequest'] = _LOGINREQUEST
-DESCRIPTOR.message_types_by_name['LoginResponse'] = _LOGINRESPONSE
+DESCRIPTOR.message_types_by_name['TokenExchangeRequest'] = _TOKENEXCHANGEREQUEST
+DESCRIPTOR.message_types_by_name['TokenExchangeResponse'] = _TOKENEXCHANGERESPONSE
 DESCRIPTOR.enum_types_by_name['IdentityProvider'] = _IDENTITYPROVIDER
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -199,19 +206,19 @@ UserData = _reflection.GeneratedProtocolMessageType('UserData', (_message.Messag
   })
 _sym_db.RegisterMessage(UserData)
 
-LoginRequest = _reflection.GeneratedProtocolMessageType('LoginRequest', (_message.Message,), {
-  'DESCRIPTOR' : _LOGINREQUEST,
+TokenExchangeRequest = _reflection.GeneratedProtocolMessageType('TokenExchangeRequest', (_message.Message,), {
+  'DESCRIPTOR' : _TOKENEXCHANGEREQUEST,
   '__module__' : 'user_pb2'
-  # @@protoc_insertion_point(class_scope:nextTwirpTest.user.LoginRequest)
+  # @@protoc_insertion_point(class_scope:nextTwirpTest.user.TokenExchangeRequest)
   })
-_sym_db.RegisterMessage(LoginRequest)
+_sym_db.RegisterMessage(TokenExchangeRequest)
 
-LoginResponse = _reflection.GeneratedProtocolMessageType('LoginResponse', (_message.Message,), {
-  'DESCRIPTOR' : _LOGINRESPONSE,
+TokenExchangeResponse = _reflection.GeneratedProtocolMessageType('TokenExchangeResponse', (_message.Message,), {
+  'DESCRIPTOR' : _TOKENEXCHANGERESPONSE,
   '__module__' : 'user_pb2'
-  # @@protoc_insertion_point(class_scope:nextTwirpTest.user.LoginResponse)
+  # @@protoc_insertion_point(class_scope:nextTwirpTest.user.TokenExchangeResponse)
   })
-_sym_db.RegisterMessage(LoginResponse)
+_sym_db.RegisterMessage(TokenExchangeResponse)
 
 
 DESCRIPTOR._options = None
@@ -223,16 +230,16 @@ _USER = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=338,
-  serialized_end=422,
+  serialized_start=378,
+  serialized_end=486,
   methods=[
   _descriptor.MethodDescriptor(
-    name='Login',
-    full_name='nextTwirpTest.user.User.Login',
+    name='TokenExchange',
+    full_name='nextTwirpTest.user.User.TokenExchange',
     index=0,
     containing_service=None,
-    input_type=_LOGINREQUEST,
-    output_type=_LOGINRESPONSE,
+    input_type=_TOKENEXCHANGEREQUEST,
+    output_type=_TOKENEXCHANGERESPONSE,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),
