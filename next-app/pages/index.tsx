@@ -35,11 +35,11 @@ export const Home = (): JSX.Element => {
 
         {!authSession && <>
           Not signed in <br />
-          <button onClick={signIn}>Sign in</button>
+          <button onClick={signIn as any}>Sign in</button>
         </>}
         {authSession && <>
           Signed in as {JSON.stringify(authSession)} <br />
-          <button onClick={signOut}>Sign out</button>
+          <button onClick={signOut as any}>Sign out</button>
         </>}
 
         <button

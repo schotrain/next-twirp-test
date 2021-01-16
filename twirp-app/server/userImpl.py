@@ -35,7 +35,6 @@ class UserService(object):
 
 
     def TokenExchange(self, context, tokenExcangeRequest):
-        #TODO document and test this. Also encrypt a key for future API calls
         if tokenExcangeRequest.identityProvider == None:
             raise InvalidArgument(argument="identityProvider", error="Invalid identity provider")
         if tokenExcangeRequest.idpAccessToken == None:
