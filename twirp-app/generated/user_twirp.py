@@ -16,22 +16,38 @@ class UserServer(TwirpServer):
 		super().__init__(service=service)
 		self._prefix = F"{server_path_prefix}/nextTwirpTest.user.User"
 		self._endpoints = {
-			"TokenExchange": Endpoint(
+			"GetAccessToken": Endpoint(
 				service_name="User",
-				name="TokenExchange",
-				function=getattr(service, "TokenExchange"),
-				input=_sym_db.GetSymbol("nextTwirpTest.user.TokenExchangeRequest"),
-				output=_sym_db.GetSymbol("nextTwirpTest.user.TokenExchangeResponse"),
+				name="GetAccessToken",
+				function=getattr(service, "GetAccessToken"),
+				input=_sym_db.GetSymbol("nextTwirpTest.user.GetAccessTokenRequest"),
+				output=_sym_db.GetSymbol("nextTwirpTest.user.GetAccessTokenResponse"),
+			),
+			"GetUserInfo": Endpoint(
+				service_name="User",
+				name="GetUserInfo",
+				function=getattr(service, "GetUserInfo"),
+				input=_sym_db.GetSymbol("nextTwirpTest.user.GetUserInfoRequest"),
+				output=_sym_db.GetSymbol("nextTwirpTest.user.GetUserInfoResponse"),
 			),
 		}
 
 class UserClient(TwirpClient):
 
-	def TokenExchange(self, *args, ctx, request, server_path_prefix="/twirp", **kwargs):
+	def GetAccessToken(self, *args, ctx, request, server_path_prefix="/twirp", **kwargs):
 		return self._make_request(
-			url=F"{server_path_prefix}/nextTwirpTest.user.User/TokenExchange",
+			url=F"{server_path_prefix}/nextTwirpTest.user.User/GetAccessToken",
 			ctx=ctx,
 			request=request,
-			response_obj=_sym_db.GetSymbol("nextTwirpTest.user.TokenExchangeResponse"),
+			response_obj=_sym_db.GetSymbol("nextTwirpTest.user.GetAccessTokenResponse"),
+			**kwargs,
+		)
+
+	def GetUserInfo(self, *args, ctx, request, server_path_prefix="/twirp", **kwargs):
+		return self._make_request(
+			url=F"{server_path_prefix}/nextTwirpTest.user.User/GetUserInfo",
+			ctx=ctx,
+			request=request,
+			response_obj=_sym_db.GetSymbol("nextTwirpTest.user.GetUserInfoResponse"),
 			**kwargs,
 		)

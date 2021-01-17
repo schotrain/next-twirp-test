@@ -3,7 +3,7 @@ syntax = "proto3";
 package nextTwirpTest.user;
 option go_package = "user";
 
-message UserData {
+message UserInfo {
   string id = 1;
   string email = 2;
   string givenName = 3;
@@ -17,15 +17,22 @@ enum IdentityProvider {
 }
 
 service User {
-  rpc TokenExchange(TokenExchangeRequest) returns (TokenExchangeResponse);
+  rpc GetAccessToken(GetAccessTokenRequest) returns (GetAccessTokenResponse);
+  rpc GetUserInfo(GetUserInfoRequest) returns (GetUserInfoResponse);
 }
 
-message TokenExchangeRequest {
+message GetAccessTokenRequest {
   IdentityProvider identityProvider = 1;
-  string idpAccessToken = 2;
+  string identityProviderId = 2;
+  string hmac = 3;
 }
 
-message TokenExchangeResponse {
+message GetAccessTokenResponse {
   string accessToken = 1;
-  UserData userData = 2;
+}
+
+message GetUserInfoRequest {}
+
+message GetUserInfoResponse {
+  UserInfo userInfo = 1;
 }

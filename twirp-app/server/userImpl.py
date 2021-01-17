@@ -1,65 +1,43 @@
-import uuid
+import os
+import hmac
+import hashlib
 import requests
+import uuid
 from generated import user_pb2
 from twirp.exceptions import InvalidArgument, TwirpServerException
 
 class UserService(object):
-    def _lookupGoogleIdentity(self, accessToken):
-        identityServer = "https://www.googleapis.com/oauth2/v1/userinfo?alt=json"
-        r = requests.get(identityServer, headers={'Authorization': 'Bearer ' + accessToken})
-        if r.status_code != requests.codes.ok:
-            return None
-        jsonData = r.json()
-        
-        return {
-            'givenName': jsonData["given_name"],
-            'familyName': jsonData["family_name"],
-            'email': jsonData["email"],
-            'imageUrl': jsonData["picture"]
-        }
-
-
-    def _lookupOktaIdentity(self, accessToken):
-        identityServer = "https://dev-9242554.okta.com/oauth2/v1/userinfo"
-        r = requests.get(identityServer, headers={'Authorization': 'Bearer ' + accessToken})
-        if r.status_code != requests.codes.ok:
-            return None
-        jsonData = r.json()
-
-        return {
-            'givenName': jsonData["given_name"],
-            'familyName': jsonData["family_name"],
-            'email': jsonData["email"],
-            'imageUrl': ""
-        }
-
-
-    def TokenExchange(self, context, tokenExcangeRequest):
-        if tokenExcangeRequest.identityProvider == None:
+    
+    def GetAccessToken(self, context, getAccessTokenRequest):
+        if getAccessTokenRequest.identityProvider == None:
             raise InvalidArgument(argument="identityProvider", error="Invalid identity provider")
-        if tokenExcangeRequest.idpAccessToken == None:
-            raise InvalidArgument(argument="idpAccessToken", error="Invalid idpAccessToken")
+        if getAccessTokenRequest.identityProviderId == None:
+            raise InvalidArgument(argument="identityProviderId", error="Invalid identityProviderId")
+        if getAccessTokenRequest.hmac == None:
+            raise InvalidArgument(argument="hmac", error="Invalid hmac")
         
-        userData = None
-        if tokenExcangeRequest.identityProvider == user_pb2.IdentityProvider.GOOGLE:
-            userData = self._lookupGoogleIdentity(tokenExcangeRequest.idpAccessToken)
-        if tokenExcangeRequest.identityProvider == user_pb2.IdentityProvider.OKTA:
-            userData = self._lookupOktaIdentity(tokenExcangeRequest.idpAccessToken)
+        
+        keyBytes = bytes(os.getenv("AUTH_SECRET"), 'UTF-8')
+        messageBytes = bytes(str(getAccessTokenRequest.identityProvider) + getAccessTokenRequest.identityProviderId, 'UTF-8')
+        computedHmac = hmac.new(keyBytes, messageBytes, hashlib.sha512).hexdigest()
 
-        if userData == None:
-            raise TwirpServerException(code="UserLookup", message="Error lookup up user data")
-
+        if computedHmac != getAccessTokenRequest.hmac:
+            raise InvalidArgument(argument="hmac", error="Invalid hmac")
+        
         accessToken = str(uuid.uuid4())
 
-        # TODO store this in a session db or redis or something
-
-        return user_pb2.TokenExchangeResponse(
-            userData=user_pb2.UserData(
-                id="asdf",
-                email=userData['email'],
-                givenName=userData['givenName'],
-                familyName=userData['familyName'],
-                imageUrl=userData['imageUrl']
-            ),
+        return user_pb2.GetAccessTokenResponse(
             accessToken=accessToken
+        )
+    
+
+    def GetUserInfo(self, context, getUserInfoRequest):
+        return user_pb2.GetUserInfoResponse(
+            userInfo=user_pb2.UserInfo(
+                id="12345",
+                email = 'me@you.com',
+                givenName = 'given',
+                familyName = 'family',
+                imageUrl = 'http://www.test.com/image'
+            )
         )

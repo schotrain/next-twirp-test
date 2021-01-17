@@ -16,9 +16,9 @@ import { stackIntercept } from "@protobuf-ts/runtime-rpc";
 import { UnaryCall } from "@protobuf-ts/runtime-rpc";
 import { RpcOptions } from "@protobuf-ts/runtime-rpc";
 /**
- * @generated from protobuf message nextTwirpTest.user.UserData
+ * @generated from protobuf message nextTwirpTest.user.UserInfo
  */
-export interface UserData {
+export interface UserInfo {
     /**
      * @generated from protobuf field: string id = 1;
      */
@@ -41,30 +41,44 @@ export interface UserData {
     imageUrl: string;
 }
 /**
- * @generated from protobuf message nextTwirpTest.user.TokenExchangeRequest
+ * @generated from protobuf message nextTwirpTest.user.GetAccessTokenRequest
  */
-export interface TokenExchangeRequest {
+export interface GetAccessTokenRequest {
     /**
      * @generated from protobuf field: nextTwirpTest.user.IdentityProvider identityProvider = 1;
      */
     identityProvider: IdentityProvider;
     /**
-     * @generated from protobuf field: string idpAccessToken = 2;
+     * @generated from protobuf field: string identityProviderId = 2;
      */
-    idpAccessToken: string;
+    identityProviderId: string;
+    /**
+     * @generated from protobuf field: string hmac = 3;
+     */
+    hmac: string;
 }
 /**
- * @generated from protobuf message nextTwirpTest.user.TokenExchangeResponse
+ * @generated from protobuf message nextTwirpTest.user.GetAccessTokenResponse
  */
-export interface TokenExchangeResponse {
+export interface GetAccessTokenResponse {
     /**
      * @generated from protobuf field: string accessToken = 1;
      */
     accessToken: string;
+}
+/**
+ * @generated from protobuf message nextTwirpTest.user.GetUserInfoRequest
+ */
+export interface GetUserInfoRequest {
+}
+/**
+ * @generated from protobuf message nextTwirpTest.user.GetUserInfoResponse
+ */
+export interface GetUserInfoResponse {
     /**
-     * @generated from protobuf field: nextTwirpTest.user.UserData userData = 2;
+     * @generated from protobuf field: nextTwirpTest.user.UserInfo userInfo = 1;
      */
-    userData?: UserData;
+    userInfo?: UserInfo;
 }
 /**
  * @generated from protobuf enum nextTwirpTest.user.IdentityProvider
@@ -84,16 +98,20 @@ export enum IdentityProvider {
  */
 export interface IUserClient {
     /**
-     * @generated from protobuf rpc: TokenExchange(nextTwirpTest.user.TokenExchangeRequest) returns (nextTwirpTest.user.TokenExchangeResponse);
+     * @generated from protobuf rpc: GetAccessToken(nextTwirpTest.user.GetAccessTokenRequest) returns (nextTwirpTest.user.GetAccessTokenResponse);
      */
-    tokenExchange(input: TokenExchangeRequest, options?: RpcOptions): UnaryCall<TokenExchangeRequest, TokenExchangeResponse>;
+    getAccessToken(input: GetAccessTokenRequest, options?: RpcOptions): UnaryCall<GetAccessTokenRequest, GetAccessTokenResponse>;
+    /**
+     * @generated from protobuf rpc: GetUserInfo(nextTwirpTest.user.GetUserInfoRequest) returns (nextTwirpTest.user.GetUserInfoResponse);
+     */
+    getUserInfo(input: GetUserInfoRequest, options?: RpcOptions): UnaryCall<GetUserInfoRequest, GetUserInfoResponse>;
 }
 /**
- * Type for protobuf message nextTwirpTest.user.UserData
+ * Type for protobuf message nextTwirpTest.user.UserInfo
  */
-class UserData$Type extends MessageType<UserData> {
+class UserInfo$Type extends MessageType<UserInfo> {
     constructor() {
-        super("nextTwirpTest.user.UserData", [
+        super("nextTwirpTest.user.UserInfo", [
             { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "email", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "givenName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
@@ -101,13 +119,13 @@ class UserData$Type extends MessageType<UserData> {
             { no: 5, name: "imageUrl", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<UserData>): UserData {
+    create(value?: PartialMessage<UserInfo>): UserInfo {
         const message = { id: "", email: "", givenName: "", familyName: "", imageUrl: "" };
         if (value !== undefined)
-            reflectionMergePartial<UserData>(this, message, value);
+            reflectionMergePartial<UserInfo>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UserData): UserData {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UserInfo): UserInfo {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -138,7 +156,7 @@ class UserData$Type extends MessageType<UserData> {
         }
         return message;
     }
-    internalBinaryWrite(message: UserData, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: UserInfo, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string id = 1; */
         if (message.id !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.id);
@@ -160,24 +178,25 @@ class UserData$Type extends MessageType<UserData> {
         return writer;
     }
 }
-export const UserData = new UserData$Type();
+export const UserInfo = new UserInfo$Type();
 /**
- * Type for protobuf message nextTwirpTest.user.TokenExchangeRequest
+ * Type for protobuf message nextTwirpTest.user.GetAccessTokenRequest
  */
-class TokenExchangeRequest$Type extends MessageType<TokenExchangeRequest> {
+class GetAccessTokenRequest$Type extends MessageType<GetAccessTokenRequest> {
     constructor() {
-        super("nextTwirpTest.user.TokenExchangeRequest", [
+        super("nextTwirpTest.user.GetAccessTokenRequest", [
             { no: 1, name: "identityProvider", kind: "enum", T: () => ["nextTwirpTest.user.IdentityProvider", IdentityProvider] },
-            { no: 2, name: "idpAccessToken", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "identityProviderId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "hmac", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<TokenExchangeRequest>): TokenExchangeRequest {
-        const message = { identityProvider: 0, idpAccessToken: "" };
+    create(value?: PartialMessage<GetAccessTokenRequest>): GetAccessTokenRequest {
+        const message = { identityProvider: 0, identityProviderId: "", hmac: "" };
         if (value !== undefined)
-            reflectionMergePartial<TokenExchangeRequest>(this, message, value);
+            reflectionMergePartial<GetAccessTokenRequest>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: TokenExchangeRequest): TokenExchangeRequest {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetAccessTokenRequest): GetAccessTokenRequest {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -185,8 +204,11 @@ class TokenExchangeRequest$Type extends MessageType<TokenExchangeRequest> {
                 case /* nextTwirpTest.user.IdentityProvider identityProvider */ 1:
                     message.identityProvider = reader.int32();
                     break;
-                case /* string idpAccessToken */ 2:
-                    message.idpAccessToken = reader.string();
+                case /* string identityProviderId */ 2:
+                    message.identityProviderId = reader.string();
+                    break;
+                case /* string hmac */ 3:
+                    message.hmac = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -199,37 +221,39 @@ class TokenExchangeRequest$Type extends MessageType<TokenExchangeRequest> {
         }
         return message;
     }
-    internalBinaryWrite(message: TokenExchangeRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: GetAccessTokenRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* nextTwirpTest.user.IdentityProvider identityProvider = 1; */
         if (message.identityProvider !== 0)
             writer.tag(1, WireType.Varint).int32(message.identityProvider);
-        /* string idpAccessToken = 2; */
-        if (message.idpAccessToken !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.idpAccessToken);
+        /* string identityProviderId = 2; */
+        if (message.identityProviderId !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.identityProviderId);
+        /* string hmac = 3; */
+        if (message.hmac !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.hmac);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
         return writer;
     }
 }
-export const TokenExchangeRequest = new TokenExchangeRequest$Type();
+export const GetAccessTokenRequest = new GetAccessTokenRequest$Type();
 /**
- * Type for protobuf message nextTwirpTest.user.TokenExchangeResponse
+ * Type for protobuf message nextTwirpTest.user.GetAccessTokenResponse
  */
-class TokenExchangeResponse$Type extends MessageType<TokenExchangeResponse> {
+class GetAccessTokenResponse$Type extends MessageType<GetAccessTokenResponse> {
     constructor() {
-        super("nextTwirpTest.user.TokenExchangeResponse", [
-            { no: 1, name: "accessToken", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "userData", kind: "message", T: () => UserData }
+        super("nextTwirpTest.user.GetAccessTokenResponse", [
+            { no: 1, name: "accessToken", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<TokenExchangeResponse>): TokenExchangeResponse {
+    create(value?: PartialMessage<GetAccessTokenResponse>): GetAccessTokenResponse {
         const message = { accessToken: "" };
         if (value !== undefined)
-            reflectionMergePartial<TokenExchangeResponse>(this, message, value);
+            reflectionMergePartial<GetAccessTokenResponse>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: TokenExchangeResponse): TokenExchangeResponse {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetAccessTokenResponse): GetAccessTokenResponse {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -237,8 +261,74 @@ class TokenExchangeResponse$Type extends MessageType<TokenExchangeResponse> {
                 case /* string accessToken */ 1:
                     message.accessToken = reader.string();
                     break;
-                case /* nextTwirpTest.user.UserData userData */ 2:
-                    message.userData = UserData.internalBinaryRead(reader, reader.uint32(), options, message.userData);
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: GetAccessTokenResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string accessToken = 1; */
+        if (message.accessToken !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.accessToken);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+export const GetAccessTokenResponse = new GetAccessTokenResponse$Type();
+/**
+ * Type for protobuf message nextTwirpTest.user.GetUserInfoRequest
+ */
+class GetUserInfoRequest$Type extends MessageType<GetUserInfoRequest> {
+    constructor() {
+        super("nextTwirpTest.user.GetUserInfoRequest", []);
+    }
+    create(value?: PartialMessage<GetUserInfoRequest>): GetUserInfoRequest {
+        const message = {};
+        if (value !== undefined)
+            reflectionMergePartial<GetUserInfoRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetUserInfoRequest): GetUserInfoRequest {
+        return target ?? this.create();
+    }
+    internalBinaryWrite(message: GetUserInfoRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+export const GetUserInfoRequest = new GetUserInfoRequest$Type();
+/**
+ * Type for protobuf message nextTwirpTest.user.GetUserInfoResponse
+ */
+class GetUserInfoResponse$Type extends MessageType<GetUserInfoResponse> {
+    constructor() {
+        super("nextTwirpTest.user.GetUserInfoResponse", [
+            { no: 1, name: "userInfo", kind: "message", T: () => UserInfo }
+        ]);
+    }
+    create(value?: PartialMessage<GetUserInfoResponse>): GetUserInfoResponse {
+        const message = {};
+        if (value !== undefined)
+            reflectionMergePartial<GetUserInfoResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetUserInfoResponse): GetUserInfoResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* nextTwirpTest.user.UserInfo userInfo */ 1:
+                    message.userInfo = UserInfo.internalBinaryRead(reader, reader.uint32(), options, message.userInfo);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -251,32 +341,34 @@ class TokenExchangeResponse$Type extends MessageType<TokenExchangeResponse> {
         }
         return message;
     }
-    internalBinaryWrite(message: TokenExchangeResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string accessToken = 1; */
-        if (message.accessToken !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.accessToken);
-        /* nextTwirpTest.user.UserData userData = 2; */
-        if (message.userData)
-            UserData.internalBinaryWrite(message.userData, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+    internalBinaryWrite(message: GetUserInfoResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* nextTwirpTest.user.UserInfo userInfo = 1; */
+        if (message.userInfo)
+            UserInfo.internalBinaryWrite(message.userInfo, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
         return writer;
     }
 }
-export const TokenExchangeResponse = new TokenExchangeResponse$Type();
+export const GetUserInfoResponse = new GetUserInfoResponse$Type();
 /**
  * @generated from protobuf service nextTwirpTest.user.User
  */
 export class UserClient implements IUserClient {
     readonly typeName = "nextTwirpTest.user.User";
     readonly methods: MethodInfo[] = [
-        { service: this, name: "TokenExchange", localName: "tokenExchange", I: TokenExchangeRequest, O: TokenExchangeResponse }
+        { service: this, name: "GetAccessToken", localName: "getAccessToken", I: GetAccessTokenRequest, O: GetAccessTokenResponse },
+        { service: this, name: "GetUserInfo", localName: "getUserInfo", I: GetUserInfoRequest, O: GetUserInfoResponse }
     ];
     constructor(private readonly _transport: RpcTransport) {
     }
-    tokenExchange(input: TokenExchangeRequest, options?: RpcOptions): UnaryCall<TokenExchangeRequest, TokenExchangeResponse> {
+    getAccessToken(input: GetAccessTokenRequest, options?: RpcOptions): UnaryCall<GetAccessTokenRequest, GetAccessTokenResponse> {
         const method = this.methods[0], opt = this._transport.mergeOptions(options), i = method.I.create(input);
-        return stackIntercept<TokenExchangeRequest, TokenExchangeResponse>("unary", this._transport, method, opt, i);
+        return stackIntercept<GetAccessTokenRequest, GetAccessTokenResponse>("unary", this._transport, method, opt, i);
+    }
+    getUserInfo(input: GetUserInfoRequest, options?: RpcOptions): UnaryCall<GetUserInfoRequest, GetUserInfoResponse> {
+        const method = this.methods[1], opt = this._transport.mergeOptions(options), i = method.I.create(input);
+        return stackIntercept<GetUserInfoRequest, GetUserInfoResponse>("unary", this._transport, method, opt, i);
     }
 }

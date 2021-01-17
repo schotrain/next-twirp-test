@@ -1,8 +1,36 @@
 import NextAuth from 'next-auth'
 import Providers from 'next-auth/providers'
-import jwt from 'jsonwebtoken'
+import {createHmac} from 'crypto'
 import { getUserClient } from '../../../lib/twirpTransport'
 import { IdentityProvider } from '../../../generated/user'
+import NodeCache from 'node-cache'
+
+const accessTokenCache = new NodeCache({stdTTL:600})
+
+const getRpcAccessToken = async (identityProvider: string, identityProviderId: string): Promise<string> => {
+    let reqIdentityProvider: IdentityProvider;
+    if (identityProvider === 'google') reqIdentityProvider = IdentityProvider.GOOGLE;
+    if (identityProvider === 'okta') reqIdentityProvider = IdentityProvider.OKTA;
+
+    const cacheKey = reqIdentityProvider + identityProviderId;
+
+    if (accessTokenCache.has(cacheKey)) {
+        return accessTokenCache.get(cacheKey);
+    }
+    
+    const secret = process.env.NEXTAUTH_SECRET;
+    const hmac = createHmac('sha512', secret).update(cacheKey).digest('hex')
+
+    const rpcCall = await getUserClient().getAccessToken({
+        identityProvider: reqIdentityProvider,
+        identityProviderId: identityProviderId,
+        hmac: hmac
+    })
+
+    const accessToken = rpcCall.response.accessToken;
+    accessTokenCache.set(cacheKey, accessToken);
+    return accessToken
+}
 
 const options = {
     secret: process.env.NEXTAUTH_SECRET,
@@ -25,33 +53,24 @@ const options = {
         jwt: async (token, user, account, profile, isNewUser) => {
             const isSignIn = (user) ? true : false
             if (isSignIn) {
-                let identityProvider: IdentityProvider;
-                if (account.provider === 'google') identityProvider = IdentityProvider.GOOGLE;
-                if (account.provider === 'okta') identityProvider = IdentityProvider.OKTA;
-
-                const loginData = await getUserClient().tokenExchange({
-                    identityProvider,
-                    idpAccessToken: account.accessToken
-                })
-                token.userId = loginData.response.userData.id;
-                token.email = loginData.response.userData.email;
-                token.given_name = loginData.response.userData.givenName;
-                token.family_name = loginData.response.userData.familyName;
-                token.imageUrl = loginData.response.userData.imageUrl;
-                token.rpcAccessToken = loginData.response.accessToken
-            } 
+                token.identityProvider = account.provider;
+                token.identityProviderId = account.id
+            }
+            token.rpcAccessToken = await getRpcAccessToken(token.identityProvider, token.identityProviderId)
             return Promise.resolve(token)
         },
         // Custom logic that will pull values from our custom token into the session
-        session: async (session, user) => {
-            delete session.user.image
-            session.user.id = user.userId;
-            session.user.email = user.email;
-            session.user.given_name = user.given_name;
-            session.user.family_name = user.family_name;
-            session.user.imageUrl = user.imageUrl;
-            session.rpcAccessToken = user.rpcAccessToken
-            return Promise.resolve(session)
+        session: async (session, token) => {
+            const userData = (await getUserClient(token.rpcAccessToken).getUserInfo({})).response.userInfo;
+
+            const sessionData = {user: {}} as any;
+            sessionData.user.id = userData.id;
+            sessionData.user.email = userData.email;
+            sessionData.user.givenName = userData.givenName;
+            sessionData.user.familyName = userData.familyName;
+            sessionData.user.imageUrl = userData.imageUrl;
+            sessionData.rpcAccessToken = token.rpcAccessToken
+            return Promise.resolve(sessionData)
         }
     }
 }

@@ -8,8 +8,8 @@ export function getHaberdasherClient(authToken: string): HaberdasherClient {
   return new HaberdasherClient(getTwirpTransport(authToken));
 }
 
-export function getUserClient(): UserClient {
-  return new UserClient(getTwirpTransport());
+export function getUserClient(authToken: string): UserClient {
+  return new UserClient(getTwirpTransport(authToken));
 }
 
 function getTwirpTransport(authToken?: string): TwirpFetchTransport {
