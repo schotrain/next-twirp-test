@@ -98,11 +98,11 @@ export enum IdentityProvider {
  */
 export interface IUserClient {
     /**
-     * @generated from protobuf rpc: GetAccessToken(nextTwirpTest.user.GetAccessTokenRequest) returns (nextTwirpTest.user.GetAccessTokenResponse);
+     * @generated from protobuf rpc: getAccessToken(nextTwirpTest.user.GetAccessTokenRequest) returns (nextTwirpTest.user.GetAccessTokenResponse);
      */
     getAccessToken(input: GetAccessTokenRequest, options?: RpcOptions): UnaryCall<GetAccessTokenRequest, GetAccessTokenResponse>;
     /**
-     * @generated from protobuf rpc: GetUserInfo(nextTwirpTest.user.GetUserInfoRequest) returns (nextTwirpTest.user.GetUserInfoResponse);
+     * @generated from protobuf rpc: getUserInfo(nextTwirpTest.user.GetUserInfoRequest) returns (nextTwirpTest.user.GetUserInfoResponse);
      */
     getUserInfo(input: GetUserInfoRequest, options?: RpcOptions): UnaryCall<GetUserInfoRequest, GetUserInfoResponse>;
 }
@@ -358,8 +358,8 @@ export const GetUserInfoResponse = new GetUserInfoResponse$Type();
 export class UserClient implements IUserClient {
     readonly typeName = "nextTwirpTest.user.User";
     readonly methods: MethodInfo[] = [
-        { service: this, name: "GetAccessToken", localName: "getAccessToken", I: GetAccessTokenRequest, O: GetAccessTokenResponse },
-        { service: this, name: "GetUserInfo", localName: "getUserInfo", I: GetUserInfoRequest, O: GetUserInfoResponse }
+        { service: this, name: "getAccessToken", I: GetAccessTokenRequest, O: GetAccessTokenResponse },
+        { service: this, name: "getUserInfo", I: GetUserInfoRequest, O: GetUserInfoResponse }
     ];
     constructor(private readonly _transport: RpcTransport) {
     }

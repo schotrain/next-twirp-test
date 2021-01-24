@@ -16,17 +16,17 @@ class UserServer(TwirpServer):
 		super().__init__(service=service)
 		self._prefix = F"{server_path_prefix}/nextTwirpTest.user.User"
 		self._endpoints = {
-			"GetAccessToken": Endpoint(
+			"getAccessToken": Endpoint(
 				service_name="User",
-				name="GetAccessToken",
-				function=getattr(service, "GetAccessToken"),
+				name="getAccessToken",
+				function=getattr(service, "getAccessToken"),
 				input=_sym_db.GetSymbol("nextTwirpTest.user.GetAccessTokenRequest"),
 				output=_sym_db.GetSymbol("nextTwirpTest.user.GetAccessTokenResponse"),
 			),
-			"GetUserInfo": Endpoint(
+			"getUserInfo": Endpoint(
 				service_name="User",
-				name="GetUserInfo",
-				function=getattr(service, "GetUserInfo"),
+				name="getUserInfo",
+				function=getattr(service, "getUserInfo"),
 				input=_sym_db.GetSymbol("nextTwirpTest.user.GetUserInfoRequest"),
 				output=_sym_db.GetSymbol("nextTwirpTest.user.GetUserInfoResponse"),
 			),
@@ -34,18 +34,18 @@ class UserServer(TwirpServer):
 
 class UserClient(TwirpClient):
 
-	def GetAccessToken(self, *args, ctx, request, server_path_prefix="/twirp", **kwargs):
+	def getAccessToken(self, *args, ctx, request, server_path_prefix="/twirp", **kwargs):
 		return self._make_request(
-			url=F"{server_path_prefix}/nextTwirpTest.user.User/GetAccessToken",
+			url=F"{server_path_prefix}/nextTwirpTest.user.User/getAccessToken",
 			ctx=ctx,
 			request=request,
 			response_obj=_sym_db.GetSymbol("nextTwirpTest.user.GetAccessTokenResponse"),
 			**kwargs,
 		)
 
-	def GetUserInfo(self, *args, ctx, request, server_path_prefix="/twirp", **kwargs):
+	def getUserInfo(self, *args, ctx, request, server_path_prefix="/twirp", **kwargs):
 		return self._make_request(
-			url=F"{server_path_prefix}/nextTwirpTest.user.User/GetUserInfo",
+			url=F"{server_path_prefix}/nextTwirpTest.user.User/getUserInfo",
 			ctx=ctx,
 			request=request,
 			response_obj=_sym_db.GetSymbol("nextTwirpTest.user.GetUserInfoResponse"),

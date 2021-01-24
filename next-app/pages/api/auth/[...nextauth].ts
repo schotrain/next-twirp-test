@@ -1,11 +1,11 @@
 import NextAuth from 'next-auth'
 import Providers from 'next-auth/providers'
 import {createHmac} from 'crypto'
-import { getUserClient } from '../../../lib/twirpTransport'
+import { getUserClient } from '../../../rpc/twirpTransport'
 import { IdentityProvider } from '../../../generated/user'
 import NodeCache from 'node-cache'
 
-const accessTokenCache = new NodeCache({stdTTL:600})
+const accessTokenCache = new NodeCache({stdTTL:540})
 
 const getRpcAccessToken = async (identityProvider: string, identityProviderId: string): Promise<string> => {
     let reqIdentityProvider: IdentityProvider;

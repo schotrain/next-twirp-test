@@ -17,8 +17,8 @@ enum IdentityProvider {
 }
 
 service User {
-  rpc GetAccessToken(GetAccessTokenRequest) returns (GetAccessTokenResponse);
-  rpc GetUserInfo(GetUserInfoRequest) returns (GetUserInfoResponse);
+  rpc getAccessToken(GetAccessTokenRequest) returns (GetAccessTokenResponse);
+  rpc getUserInfo(GetUserInfoRequest) returns (GetUserInfoResponse);
 }
 
 message GetAccessTokenRequest {

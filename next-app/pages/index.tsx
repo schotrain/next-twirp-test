@@ -2,7 +2,7 @@ import Head from 'next/head'
 import React from 'react'
 import { signIn, signOut, useSession,  } from 'next-auth/client'
 import { Hat } from '../generated/haberdasher'
-import { getHaberdasherClient } from '../lib/twirpTransport'
+import { getHaberdasherClient } from '../rpc/twirpTransport'
 
 
 const callTwirp = async function () {

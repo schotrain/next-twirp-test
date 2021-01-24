@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'Z\004user',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\nuser.proto\x12\x12nextTwirpTest.user\"^\n\x08UserInfo\x12\n\n\x02id\x18\x01 \x01(\t\x12\r\n\x05\x65mail\x18\x02 \x01(\t\x12\x11\n\tgivenName\x18\x03 \x01(\t\x12\x12\n\nfamilyName\x18\x04 \x01(\t\x12\x10\n\x08imageUrl\x18\x05 \x01(\t\"\x81\x01\n\x15GetAccessTokenRequest\x12>\n\x10identityProvider\x18\x01 \x01(\x0e\x32$.nextTwirpTest.user.IdentityProvider\x12\x1a\n\x12identityProviderId\x18\x02 \x01(\t\x12\x0c\n\x04hmac\x18\x03 \x01(\t\"-\n\x16GetAccessTokenResponse\x12\x13\n\x0b\x61\x63\x63\x65ssToken\x18\x01 \x01(\t\"\x14\n\x12GetUserInfoRequest\"E\n\x13GetUserInfoResponse\x12.\n\x08userInfo\x18\x01 \x01(\x0b\x32\x1c.nextTwirpTest.user.UserInfo*(\n\x10IdentityProvider\x12\n\n\x06GOOGLE\x10\x00\x12\x08\n\x04OKTA\x10\x01\x32\xcf\x01\n\x04User\x12g\n\x0eGetAccessToken\x12).nextTwirpTest.user.GetAccessTokenRequest\x1a*.nextTwirpTest.user.GetAccessTokenResponse\x12^\n\x0bGetUserInfo\x12&.nextTwirpTest.user.GetUserInfoRequest\x1a\'.nextTwirpTest.user.GetUserInfoResponseB\x06Z\x04userb\x06proto3'
+  serialized_pb=b'\n\nuser.proto\x12\x12nextTwirpTest.user\"^\n\x08UserInfo\x12\n\n\x02id\x18\x01 \x01(\t\x12\r\n\x05\x65mail\x18\x02 \x01(\t\x12\x11\n\tgivenName\x18\x03 \x01(\t\x12\x12\n\nfamilyName\x18\x04 \x01(\t\x12\x10\n\x08imageUrl\x18\x05 \x01(\t\"\x81\x01\n\x15GetAccessTokenRequest\x12>\n\x10identityProvider\x18\x01 \x01(\x0e\x32$.nextTwirpTest.user.IdentityProvider\x12\x1a\n\x12identityProviderId\x18\x02 \x01(\t\x12\x0c\n\x04hmac\x18\x03 \x01(\t\"-\n\x16GetAccessTokenResponse\x12\x13\n\x0b\x61\x63\x63\x65ssToken\x18\x01 \x01(\t\"\x14\n\x12GetUserInfoRequest\"E\n\x13GetUserInfoResponse\x12.\n\x08userInfo\x18\x01 \x01(\x0b\x32\x1c.nextTwirpTest.user.UserInfo*(\n\x10IdentityProvider\x12\n\n\x06GOOGLE\x10\x00\x12\x08\n\x04OKTA\x10\x01\x32\xcf\x01\n\x04User\x12g\n\x0egetAccessToken\x12).nextTwirpTest.user.GetAccessTokenRequest\x1a*.nextTwirpTest.user.GetAccessTokenResponse\x12^\n\x0bgetUserInfo\x12&.nextTwirpTest.user.GetUserInfoRequest\x1a\'.nextTwirpTest.user.GetUserInfoResponseB\x06Z\x04userb\x06proto3'
 )
 
 _IDENTITYPROVIDER = _descriptor.EnumDescriptor(
@@ -307,8 +307,8 @@ _USER = _descriptor.ServiceDescriptor(
   serialized_end=652,
   methods=[
   _descriptor.MethodDescriptor(
-    name='GetAccessToken',
-    full_name='nextTwirpTest.user.User.GetAccessToken',
+    name='getAccessToken',
+    full_name='nextTwirpTest.user.User.getAccessToken',
     index=0,
     containing_service=None,
     input_type=_GETACCESSTOKENREQUEST,
@@ -317,8 +317,8 @@ _USER = _descriptor.ServiceDescriptor(
     create_key=_descriptor._internal_create_key,
   ),
   _descriptor.MethodDescriptor(
-    name='GetUserInfo',
-    full_name='nextTwirpTest.user.User.GetUserInfo',
+    name='getUserInfo',
+    full_name='nextTwirpTest.user.User.getUserInfo',
     index=1,
     containing_service=None,
     input_type=_GETUSERINFOREQUEST,

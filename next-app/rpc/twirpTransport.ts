@@ -8,13 +8,14 @@ export function getHaberdasherClient(authToken: string): HaberdasherClient {
   return new HaberdasherClient(getTwirpTransport(authToken));
 }
 
-export function getUserClient(authToken: string): UserClient {
+export function getUserClient(authToken?: string): UserClient {
   return new UserClient(getTwirpTransport(authToken));
 }
 
 function getTwirpTransport(authToken?: string): TwirpFetchTransport {
   return new TwirpFetchTransport({
     baseUrl: process.env.NEXT_PUBLIC_TWIRP_ENDPOINT,
+    useProtoMethodName: true,
     sendJson: true,
     interceptors: [
       {
@@ -24,7 +25,7 @@ function getTwirpTransport(authToken?: string): TwirpFetchTransport {
             options.meta = {};
           }
           if (authToken) {
-            options.meta['Authorization'] = authToken;
+            options.meta['Authorization'] = `Bearer ${authToken}`;
           }
           return next(method, input, options);
         }
