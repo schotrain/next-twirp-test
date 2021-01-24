@@ -5,8 +5,8 @@ import { Hat } from '../generated/haberdasher'
 import { getHaberdasherClient } from '../rpc/twirpTransport'
 
 
-const callTwirp = async function () {
-  let client = getHaberdasherClient('asdf')
+const callTwirp = async function (authToken: string) {
+  let client = getHaberdasherClient(authToken)
   let call = await client.makeHat({ inches: 23 });
   let response: Hat = call.response;
   return response;
@@ -44,7 +44,7 @@ export const Home = (): JSX.Element => {
 
         <button
           onClick={() => {
-            callTwirp().then((resp) => {
+            callTwirp(authSession.rpcAccessToken).then((resp) => {
               window.alert(JSON.stringify(resp))
             });
 

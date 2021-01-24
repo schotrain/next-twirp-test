@@ -1,11 +1,11 @@
 import NextAuth from 'next-auth'
 import Providers from 'next-auth/providers'
-import {createHmac} from 'crypto'
+import { createHmac } from 'crypto'
 import { getUserClient } from '../../../rpc/twirpTransport'
 import { IdentityProvider } from '../../../generated/user'
 import NodeCache from 'node-cache'
 
-const accessTokenCache = new NodeCache({stdTTL:540})
+const accessTokenCache = new NodeCache({ stdTTL: 540 })
 
 const getRpcAccessToken = async (identityProvider: string, identityProviderId: string): Promise<string> => {
     let reqIdentityProvider: IdentityProvider;
@@ -17,7 +17,7 @@ const getRpcAccessToken = async (identityProvider: string, identityProviderId: s
     if (accessTokenCache.has(cacheKey)) {
         return accessTokenCache.get(cacheKey);
     }
-    
+
     const secret = process.env.NEXTAUTH_SECRET;
     const hmac = createHmac('sha512', secret).update(cacheKey).digest('hex')
 
@@ -61,16 +61,20 @@ const options = {
         },
         // Custom logic that will pull values from our custom token into the session
         session: async (session, token) => {
-            const userData = (await getUserClient(token.rpcAccessToken).getUserInfo({})).response.userInfo;
+            const getUserInfoResp = await getUserClient(token.rpcAccessToken).getUserInfo({}).response
 
-            const sessionData = {user: {}} as any;
-            sessionData.user.id = userData.id;
-            sessionData.user.email = userData.email;
-            sessionData.user.givenName = userData.givenName;
-            sessionData.user.familyName = userData.familyName;
-            sessionData.user.imageUrl = userData.imageUrl;
-            sessionData.rpcAccessToken = token.rpcAccessToken
-            return Promise.resolve(sessionData)
+            session.rpcAccessToken = token.rpcAccessToken
+            if (getUserInfoResp.userInfo) {
+                session.rpcUserData = {
+                    id: getUserInfoResp.userInfo.id,
+                    email: getUserInfoResp.userInfo.email,
+                    givenName: getUserInfoResp.userInfo.givenName,
+                    familyName: getUserInfoResp.userInfo.familyName,
+                    imageUrl: getUserInfoResp.userInfo.imageUrl
+                }
+            }
+
+            return Promise.resolve(session)
         }
     }
 }
