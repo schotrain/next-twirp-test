@@ -5,8 +5,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "next dev",
-    "prebuild": "next telemetry disable",
-    "build": "next build",
+    "build": "next telemetry disable && next build",
     "start": "next start",
     "type-check": "tsc --pretty --noEmit",
     "format": "prettier --write .",
