@@ -1,15 +1,18 @@
-FROM node:15-alpine
-
-ARG NEXT_PUBLIC_TWIRP_ENDPOINT
-
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
-
-COPY . /usr/src/app
-
+FROM node:15-alpine AS build
+RUN mkdir /build
+WORKDIR /build
+RUN apk add --no-cache python make g++
+ENV NODE_ENV=production
 RUN npm ci 
-
 RUN npm run build
+RUN npm ci --production
 
+
+FROM node:15-alpine
+ARG NEXT_PUBLIC_TWIRP_ENDPOINT
+RUN mkdir /app
+WORKDIR /app
+ENV NODE_ENV=production
+COPY --from=build /build /app
 EXPOSE $PORT
 CMD npx next start -p $PORT
