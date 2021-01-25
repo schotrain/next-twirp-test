@@ -3,7 +3,7 @@ RUN mkdir /build
 WORKDIR /build
 RUN apk add --no-cache python make g++
 ENV NODE_ENV=production
-COPY . /app
+COPY . /build
 RUN npm ci 
 RUN npm run build
 RUN npm ci --production
