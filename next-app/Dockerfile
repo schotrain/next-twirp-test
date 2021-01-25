@@ -1,4 +1,5 @@
 FROM node:15-alpine AS build
+ARG NEXT_PUBLIC_TWIRP_ENDPOINT
 RUN mkdir /build
 WORKDIR /build
 RUN apk add --no-cache python make g++
@@ -9,7 +10,6 @@ RUN npm ci --production
 
 
 FROM node:15-alpine
-ARG NEXT_PUBLIC_TWIRP_ENDPOINT
 RUN mkdir /app
 WORKDIR /app
 COPY --from=build /build /app
