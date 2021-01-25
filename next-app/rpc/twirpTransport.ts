@@ -4,7 +4,7 @@ import { HaberdasherClient } from '../generated/haberdasher'
 import { UserClient } from '../generated/user';
 
 
-export function getHaberdasherClient(authToken: string): HaberdasherClient {
+export function getHaberdasherClient(authToken?: string): HaberdasherClient {
   return new HaberdasherClient(getTwirpTransport(authToken));
 }
 

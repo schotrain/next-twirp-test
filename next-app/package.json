@@ -20,12 +20,16 @@
     ]
   },
   "dependencies": {
+    "@blueprintjs/core": "^3.38.0",
+    "@blueprintjs/icons": "^3.24.0",
+    "@blueprintjs/popover2": "^0.1.0",
     "@protobuf-ts/plugin": "^1.0.12",
     "@protobuf-ts/protoc": "^1.0.12",
     "@protobuf-ts/twirp-transport": "^1.0.12",
     "jsonwebtoken": "^8.5.1",
     "next": "latest",
     "next-auth": "^3.1.0",
+    "next-translate": "^1.0.1",
     "node-cache": "^5.1.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -50,7 +54,9 @@
     "jest-watch-typeahead": "^0.5.0",
     "lint-staged": "^10.0.10",
     "node-jose-tools": "^1.6.22",
+    "node-sass": "^4.14.1",
     "prettier": "^2.0.2",
+    "styled-jsx-plugin-sass": "^1.0.0",
     "typescript": "^3.8.3"
   }
 }

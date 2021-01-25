@@ -1,3 +1,23 @@
 {
-  "presets": ["next/babel"]
+  "presets": [
+    [
+      "next/babel",
+      {
+        "styled-jsx": {
+          "plugins": [
+            [
+              "styled-jsx-plugin-sass",
+              {
+                "sassOptions": {
+                  "includePaths": [
+                    "node_modules/@blueprintjs/core/lib/scss"
+                  ]
+                }
+              }
+            ]
+          ]
+        }
+      }
+    ]
+  ]
 }

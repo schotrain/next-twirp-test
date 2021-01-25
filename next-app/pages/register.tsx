@@ -10,18 +10,11 @@ import { Button } from '@blueprintjs/core'
 export const Home = (): JSX.Element => {
   const [authSession, authLoading] = useSession();
 
-  const callTwirp = async function () {
-    let client = getHaberdasherClient();
-    let call = await client.makeHat({ inches: 23 });
-    let response: Hat = call.response;
-    return response;
-  }
-
   return (
     <>
       <PageShell>
         <div>
-          <Button onClick={async () => {alert(JSON.stringify(await callTwirp()))}}>Call Twirp</Button>
+          Register
         </div>
       </PageShell>
     </>
