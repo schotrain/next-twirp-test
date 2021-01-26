@@ -15,13 +15,15 @@ jobs:
       - image: docker
     steps:
       - checkout
-      - cd next-app
-      - docker build -t next-twirp-test-next
+      - run: |
+        cd next-app
+        docker build -t next-twirp-test-next
 
   build-twirp-app:  
     docker:
       - image: docker
     steps:
       - checkout
-      - cd twirp-app
-      - docker build -t next-twirp-test-twirp
+      - run: |
+        cd twirp-app
+        docker build -t next-twirp-test-twirp
