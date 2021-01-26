@@ -13,10 +13,12 @@ jobs:
     steps:
       - setup_remote_docker
       - checkout
-      - run: |
-        cd next-app
-        export PORT=3000
-        docker build -t next-twirp-test-next --build-arg NEXT_PUBLIC_TWIRP_ENDPOINT='https://next-twirp-test-twirp-app.herokuapp.com/rpc' .
+      - run: 
+        - name: Build next docker image
+        - command: |
+          cd next-app
+          export PORT=3000
+          docker build -t next-twirp-test-next --build-arg NEXT_PUBLIC_TWIRP_ENDPOINT='https://next-twirp-test-twirp-app.herokuapp.com/rpc' .
 
   build-twirp-app:  
     docker:
@@ -24,7 +26,9 @@ jobs:
     steps:
       - setup_remote_docker
       - checkout
-      - run: |
-        cd twirp-app
-        export PORT=3001
-        docker build -t next-twirp-test-twirp .
+      - run: 
+        - name: Build twirp docker image
+        - command: |
+          cd twirp-app
+          export PORT=3001
+          docker build -t next-twirp-test-twirp .
