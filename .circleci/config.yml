@@ -1,0 +1,27 @@
+version: 2.1
+
+orbs:
+  heroku: circleci/heroku@0.0.10.
+
+workflows:
+  build-and-deploy: 
+    jobs:
+      - build-next-app
+
+jobs:
+  build-next-app:  
+    docker:
+      - image: docker
+    steps:
+      - checkout
+      - cd next-app
+      - docker build -t next-twirp-test-next
+
+jobs:
+  build-twirp-app:  
+    docker:
+      - image: docker
+    steps:
+      - checkout
+      - cd twirp-app
+      - docker build -t next-twirp-test-twirp
