@@ -7,6 +7,7 @@ workflows:
   build-and-deploy: 
     jobs:
       - build-next-app
+      - build-twirp-app
 
 jobs:
   build-next-app:  
@@ -17,7 +18,6 @@ jobs:
       - cd next-app
       - docker build -t next-twirp-test-next
 
-jobs:
   build-twirp-app:  
     docker:
       - image: docker
