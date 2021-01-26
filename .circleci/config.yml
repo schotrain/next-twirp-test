@@ -15,7 +15,7 @@ jobs:
     steps:
       - setup_remote_docker
       - checkout
-      - run: cd next-app && docker build -t next-twirp-test-next --build-arg NEXT_PUBLIC_TWIRP_ENDPOINT='https://next-twirp-test-twirp-app.herokuapp.com/rpc' 
+      - run: cd next-app && docker build -t next-twirp-test-next --build-arg NEXT_PUBLIC_TWIRP_ENDPOINT='https://next-twirp-test-twirp-app.herokuapp.com/rpc' .
 
   build-twirp-app:  
     docker:
