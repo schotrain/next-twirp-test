@@ -12,10 +12,17 @@ RUN apk add --no-cache python make g++
 
 # Do npm ci before we copy code so the builds can be cahced in deps don't changge
 COPY package*.json ./
+
+# Generate the production node_modules
+RUN npm ci --production
+RUN mv node_modules production_node_modules
+
+# Generate the regular node_modules
 RUN npm ci 
 
 COPY . /build
 RUN npm run build
+
 
 ###
 # Run image
@@ -27,8 +34,7 @@ WORKDIR /app
 
 # Do npm ci before we copy code so the builds can be cahced in deps don't changge
 COPY --from=build /build/package*.json ./
-RUN npm ci --production
-
+COPY --from=build /build/production_node_modules ./node_modules
 COPY --from=build /build/public ./public
 COPY --from=build /build/.next ./.next
 
