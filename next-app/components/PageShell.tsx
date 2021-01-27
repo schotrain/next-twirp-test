@@ -51,6 +51,9 @@ export const PageShell = ({ children }): JSX.Element => {
                 background-color: #30404d;
                 color: #f5f8fa;
             }
+            *:focus {
+              outline: 1px solid rgb(50, 50, 50);
+            }
         `}</style>
     </div>
   )
