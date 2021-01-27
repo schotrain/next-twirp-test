@@ -3,8 +3,9 @@ ARG NEXT_PUBLIC_TWIRP_ENDPOINT
 RUN mkdir /build
 WORKDIR /build
 RUN apk add --no-cache python make g++
-COPY . /build
+COPY package*.json ./
 RUN npm ci 
+COPY . /build
 RUN npm run build
 RUN npm ci --production
 
