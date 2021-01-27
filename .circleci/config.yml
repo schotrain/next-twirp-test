@@ -23,6 +23,7 @@ jobs:
           command: |
             cd next-app
             echo $PORT
+            docker login --username=_ --password=$(heroku auth:token) registry.heroku.com
             docker build -t registry.heroku.com/next-twirp-test-next-app/web --build-arg NEXT_PUBLIC_TWIRP_ENDPOINT .
             docker push registry.heroku.com/next-twirp-test-next-app/web
             heroku container:release web
