@@ -5,7 +5,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "next dev",
-    "build": "next telemetry disable && next build",
+    "build": "next telemetry disable &&  NODE_OPTIONS=--max_old_space_size=8192 next build",
     "start": "next start",
     "type-check": "tsc --pretty --noEmit",
     "format": "prettier --write .",
