@@ -18,7 +18,6 @@ jobs:
       - checkout
       - run: 
           command: |
-            sudo apt install docker.io
             cd next-app
             export PORT=3000
             docker build -t next-twirp-test-next --build-arg NEXT_PUBLIC_TWIRP_ENDPOINT='https://next-twirp-test-twirp-app.herokuapp.com/rpc' .
