@@ -33,6 +33,7 @@ jobs:
     steps:
       - setup_remote_docker
       - heroku/install
+      - checkout
       - run: 
           command: |
             cd twirp-app
