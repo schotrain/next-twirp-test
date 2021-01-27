@@ -1,3 +1,6 @@
+###
+# Build image
+###
 FROM node:15-alpine AS build
 
 ARG NEXT_PUBLIC_TWIRP_ENDPOINT
@@ -14,11 +17,21 @@ RUN npm ci
 COPY . /build
 RUN npm run build
 
-
+###
+# Run image
+###
 FROM node:15-alpine
 ENV PORT 3000
 RUN mkdir /app
 WORKDIR /app
-COPY --from=build /build /app
+
+# Do npm ci before we copy code so the builds can be cahced in deps don't changge
+COPY --from=build /build/package*.json ./
+RUN npm ci --production
+
+COPY --from=build /build/public ./public
+COPY --from=build /build/.next ./.next
+
+
 EXPOSE $PORT
 CMD npx next start -p $PORT
