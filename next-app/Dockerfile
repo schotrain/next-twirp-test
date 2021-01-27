@@ -10,6 +10,7 @@ RUN npm ci --production
 
 
 FROM node:15-alpine
+ENV PORT 3000
 RUN mkdir /app
 WORKDIR /app
 COPY --from=build /build /app

@@ -1,4 +1,5 @@
 FROM python:3.9-alpine
+ENV PORT 3001
 RUN mkdir /app
 WORKDIR /app
 

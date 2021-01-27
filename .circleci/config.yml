@@ -19,10 +19,10 @@ jobs:
       - checkout
       - run: 
           environment:
-            PORT: 3000
             NEXT_PUBLIC_TWIRP_ENDPOINT: https://next-twirp-test-twirp-app.herokuapp.com/rpc
           command: |
             cd next-app
+            echo $PORT
             docker build -t next-twirp-test-next --build-arg NEXT_PUBLIC_TWIRP_ENDPOINT .
       - heroku/push-docker-image:
           app-name: next-twirp-test-next-app
@@ -40,5 +40,4 @@ jobs:
       - run: 
           command:
             cd twirp-app
-            export PORT=3001
             docker build -t next-twirp-test-twirp .
