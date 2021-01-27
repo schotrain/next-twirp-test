@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  heroku: circleci/heroku@1.2.4
+
 workflows:
   build-and-deploy: 
     jobs:
@@ -17,6 +20,13 @@ jobs:
           cd next-app
           export PORT=3000
           docker build -t next-twirp-test-next --build-arg NEXT_PUBLIC_TWIRP_ENDPOINT='https://next-twirp-test-twirp-app.herokuapp.com/rpc' .
+      - heroku/install
+      - heroku/push-docker-image:
+          app-name: next-twirp-test-next-app
+          process-types: web
+      - heroku/release-docker-image:
+          app-name: next-twirp-test-next-app
+          process-types: web
 
   build-twirp-app:  
     docker:
