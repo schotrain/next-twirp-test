@@ -18,6 +18,7 @@ jobs:
       - heroku/install
       - checkout
       - run: 
+          name: Build docker image, publish to heroku and release
           environment:
             NEXT_PUBLIC_TWIRP_ENDPOINT: https://next-twirp-test-twirp-app.herokuapp.com/rpc
           command: |
@@ -35,6 +36,7 @@ jobs:
       - heroku/install
       - checkout
       - run: 
+          name: Build docker image, publish to heroku and release
           command: |
             cd twirp-app
             docker login --username=_ --password=$(heroku auth:token) registry.heroku.com
