@@ -22,19 +22,21 @@ jobs:
             NEXT_PUBLIC_TWIRP_ENDPOINT: https://next-twirp-test-twirp-app.herokuapp.com/rpc
           command: |
             cd next-app
-            echo $PORT
             docker login --username=_ --password=$(heroku auth:token) registry.heroku.com
             docker build -t registry.heroku.com/next-twirp-test-next-app/web --build-arg NEXT_PUBLIC_TWIRP_ENDPOINT .
             docker push registry.heroku.com/next-twirp-test-next-app/web
-            heroku container:release web
+            heroku container:release -a next-twirp-test-next-app web
 
   build-twirp-app:  
     docker:
-      - image: docker
+      - image: cimg/base:2020.01
     steps:
       - setup_remote_docker
-      - checkout
+      - heroku/install
       - run: 
           command:
             cd twirp-app
-            docker build -t next-twirp-test-twirp .
+            docker login --username=_ --password=$(heroku auth:token) registry.heroku.com
+            docker build -t registry.heroku.com/next-twirp-test-twirp-app/web .
+            docker push registry.heroku.com/next-twirp-test-twirp-app/web
+            heroku container:release -a next-twirp-test-twirp-app web
