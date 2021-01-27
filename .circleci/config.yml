@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   heroku: circleci/heroku@1.2.4
+  docker: circleci/docker@1.5.0
 
 workflows:
   build-and-deploy: 
@@ -14,6 +15,7 @@ jobs:
     docker:
       - image: cimg/base:2020.01
     steps:
+      - docker/install-docker-tools
       - setup_remote_docker
       - checkout
       - run: 
