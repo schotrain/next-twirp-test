@@ -34,7 +34,7 @@ jobs:
       - setup_remote_docker
       - heroku/install
       - run: 
-          command:
+          command: |
             cd twirp-app
             docker login --username=_ --password=$(heroku auth:token) registry.heroku.com
             docker build -t registry.heroku.com/next-twirp-test-twirp-app/web .
