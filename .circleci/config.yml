@@ -11,8 +11,6 @@ workflows:
 
 jobs:
   build-next-app:  
-    docker:
-      - image: docker
     executor: heroku/default
     steps:
       - setup_remote_docker
