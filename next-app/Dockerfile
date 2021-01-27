@@ -15,7 +15,7 @@ COPY package*.json ./
 
 # Generate the production node_modules
 RUN npm ci --production
-RUN mv node_modules production_node_modules
+RUN mv node_modules /production_node_modules
 
 # Generate the regular node_modules
 RUN npm ci 
@@ -34,7 +34,7 @@ WORKDIR /app
 
 # Do npm ci before we copy code so the builds can be cahced in deps don't changge
 COPY --from=build /build/package*.json ./
-COPY --from=build /build/production_node_modules ./node_modules
+COPY --from=build /production_node_modules ./node_modules
 COPY --from=build /build/public ./public
 COPY --from=build /build/.next ./.next
 
