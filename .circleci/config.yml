@@ -15,13 +15,15 @@ jobs:
       - image: cimg/base:2020.01
     steps:
       - setup_remote_docker
+      - heroku/install
       - checkout
       - run: 
+          environment:
+            PORT: 3000
+            NEXT_PUBLIC_TWIRP_ENDPOINT: https://next-twirp-test-twirp-app.herokuapp.com/rpc
           command: |
             cd next-app
-            export PORT=3000
-            docker build -t next-twirp-test-next --build-arg NEXT_PUBLIC_TWIRP_ENDPOINT='https://next-twirp-test-twirp-app.herokuapp.com/rpc' .
-      - heroku/install
+            docker build -t next-twirp-test-next --build-arg NEXT_PUBLIC_TWIRP_ENDPOINT .
       - heroku/push-docker-image:
           app-name: next-twirp-test-next-app
           process-types: web
