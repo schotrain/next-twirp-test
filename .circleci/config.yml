@@ -23,13 +23,9 @@ jobs:
           command: |
             cd next-app
             echo $PORT
-            docker build -t next-twirp-test-next --build-arg NEXT_PUBLIC_TWIRP_ENDPOINT .
-      - heroku/push-docker-image:
-          app-name: next-twirp-test-next-app
-          process-types: web
-      - heroku/release-docker-image:
-          app-name: next-twirp-test-next-app
-          process-types: web
+            docker build -t registry.heroku.com/next-twirp-test-next-app/web --build-arg NEXT_PUBLIC_TWIRP_ENDPOINT .
+            docker push registry.heroku.com/next-twirp-test-next-app/web
+            heroku container:release web
 
   build-twirp-app:  
     docker:
