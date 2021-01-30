@@ -4,9 +4,10 @@ import { useSession } from "next-auth/client";
 import useTranslation from 'next-translate/useTranslation'
 import Link from 'next/link'
 import { signIn, signOut } from 'next-auth/client'
+import RegisterCard from "./RegisterCard";
 
 
-export const PageShell = ({ children }): JSX.Element => {
+const PageShell = ({ children }): JSX.Element => {
   const [authSession, authLoading] = useSession();
   const { t, lang } = useTranslation('common')
 
@@ -27,7 +28,7 @@ export const PageShell = ({ children }): JSX.Element => {
         </Navbar.Group>
         <Navbar.Group align={Alignment.RIGHT}>
           {authSession && <Popover2 content={userMenu} placement={"bottom-start"}>
-            <Button icon="user" rightIcon="caret-down" text={authSession.user.name} />
+            <Button icon="user" rightIcon="caret-down" text={authSession.rpcUser ? `${authSession.rpcUser.givenName} ${authSession.rpcUser.familyName}` : t('new-user')} />
           </Popover2>}
           {!authSession && <Popover2 content={signInMenu} placement={"bottom-start"}>
             <Button icon="user" rightIcon="caret-down" text={t('sign-in')} />
@@ -35,6 +36,7 @@ export const PageShell = ({ children }): JSX.Element => {
         </Navbar.Group>
       </Navbar>
       <div className="body-content">
+        {authSession && !authSession.rpcUser && <RegisterCard />}
         {children}
       </div>
 

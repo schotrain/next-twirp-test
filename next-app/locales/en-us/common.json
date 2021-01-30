@@ -3,5 +3,11 @@
     "sign-in": "Sign in",
     "sign-out": "Sign out",
     "sign-in-with-google": "Sign in with Google",
-    "sign-in-with-okta": "Sign in with Okta"
+    "sign-in-with-okta": "Sign in with Okta",
+    "new-user": "New User",
+    "register-new-user": "Register New User",
+    "given-name": "Given Name",
+    "family-name": "Family Name",
+    "email": "Email",
+    "save": "Save"
 }

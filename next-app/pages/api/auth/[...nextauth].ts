@@ -54,7 +54,9 @@ const options = {
             const isSignIn = (user) ? true : false
             if (isSignIn) {
                 token.identityProvider = account.provider;
-                token.identityProviderId = account.id
+                token.identityProviderId = account.id;
+                token.givenName = profile.given_name;
+                token.familyName = profile.family_name;
             }
             token.rpcAccessToken = await getRpcAccessToken(token.identityProvider, token.identityProviderId)
             return Promise.resolve(token)
@@ -63,9 +65,17 @@ const options = {
         session: async (session, token) => {
             const getUserInfoResp = await getUserClient(token.rpcAccessToken).getUserInfo({}).response
 
-            session.rpcAccessToken = token.rpcAccessToken
+            const sessionObj = {
+                identityProviderUser: {
+                    ...session.user,
+                    givenName: token.givenName,
+                    familyName: token.familyName
+                },
+                rpcAccessToken: token.rpcAccessToken,
+                rpcUser: undefined
+            }
             if (getUserInfoResp.userInfo) {
-                session.rpcUserData = {
+                sessionObj.rpcUser = {
                     id: getUserInfoResp.userInfo.id,
                     email: getUserInfoResp.userInfo.email,
                     givenName: getUserInfoResp.userInfo.givenName,
@@ -74,7 +84,7 @@ const options = {
                 }
             }
 
-            return Promise.resolve(session)
+            return Promise.resolve(sessionObj)
         }
     }
 }
