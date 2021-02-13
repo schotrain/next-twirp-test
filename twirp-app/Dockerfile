@@ -3,7 +3,7 @@ ENV PORT 3001
 RUN mkdir /app
 WORKDIR /app
 
-RUN apk add --no-cache protoc gcc build-base libffi-dev openssl-dev postgresql-dev
+RUN apk add --no-cache protoc gcc build-base libffi-dev openssl-dev postgresql-dev rust
 
 RUN pip install poetry
 RUN poetry config virtualenvs.create false --local
