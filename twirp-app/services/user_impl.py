@@ -3,6 +3,7 @@ import hmac
 import hashlib
 import jwt
 import datetime
+from data.data import getDbSession
 from data.models.user import IdentityProviderUser
 from generated import user_pb2
 from data import models, queries
@@ -50,6 +51,17 @@ class UserService(object):
 
         return user_pb2.GetAccessTokenResponse(accessToken=encoded_jwt)
 
+
+    def userToPBUserInfo(self, user: models.User) -> user_pb2.UserInfo:
+        return user_pb2.UserInfo(
+            id=str(user.id),
+            email=user.email,
+            givenName=user.givenName,
+            familyName=user.familyName,
+            imageUrl=user.imageUrl,
+        )
+
+
     def getUserInfo(
         self, context: Context, getUserInfoRequest: user_pb2.GetUserInfoRequest
     ) -> user_pb2.GetUserInfoResponse:
@@ -61,19 +73,16 @@ class UserService(object):
                 message="Invalid authorization token",
             )
 
-        idp_user = queries.get_user_from_idp_login(
+        db_session = getDbSession()
+
+        user = queries.get_user_from_idp_login(
+            db_session,
             decoded_access_token[constants.IDENTITY_PROVIDER],
             decoded_access_token[constants.IDENTITY_PROVIDER_ID],
         )
 
-        if idp_user:
-            user_info = user_pb2.UserInfo(
-                id=idp_user.user.id,
-                email=idp_user.user.email,
-                givenName=idp_user.user.givenName,
-                familyName=idp_user.user.familyName,
-                imageUrl=idp_user.user.imageUrl,
-            )
+        if user:
+            user_info = self.userToPBUserInfo(user)
         else:
             user_info = None
 
@@ -81,7 +90,7 @@ class UserService(object):
 
     def saveUserInfo(
         self, context, saveUserInfoRequest: user_pb2.SaveUserInfoRequest
-    ) -> user_pb2.SaveUserInfoRequest:
+    ) -> user_pb2.SaveUserInfoResponse:
         decoded_access_token = context.get(constants.AUTH_TOKEN_DECODED)
         if not decoded_access_token:
             raise TwirpServerException(
@@ -89,13 +98,16 @@ class UserService(object):
                 message="Invalid authorization token",
             )
 
-        idp_user = queries.get_user_from_idp_login(
+        db_session = getDbSession()
+
+        user = queries.get_user_from_idp_login(
+            db_session,
             decoded_access_token[constants.IDENTITY_PROVIDER],
             decoded_access_token[constants.IDENTITY_PROVIDER_ID],
         )
 
-        if not idp_user:
-            idp_user = models.User(
+        if not user:
+            user = models.User(
                 givenName=saveUserInfoRequest.givenName,
                 familyName=saveUserInfoRequest.familyName,
                 email=saveUserInfoRequest.email,
@@ -108,9 +120,12 @@ class UserService(object):
                     )
                 ],
             )
+            db_session.add(user)
         else:
-            idp_user.givenName = saveUserInfoRequest.givenName
-            idp_user.familyName = saveUserInfoRequest.familyName
-            idp_user.email = saveUserInfoRequest.email
+            user.givenName = saveUserInfoRequest.givenName
+            user.familyName = saveUserInfoRequest.familyName
+            user.email = saveUserInfoRequest.email
 
-        queries.save_user(idp_user)
+        db_session.commit()
+
+        return user_pb2.SaveUserInfoResponse(userInfo=self.userToPBUserInfo(user))
