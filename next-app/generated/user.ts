@@ -96,6 +96,10 @@ export interface SaveUserInfoRequest {
      * @generated from protobuf field: string email = 3;
      */
     email: string;
+    /**
+     * @generated from protobuf field: string imageUrl = 4;
+     */
+    imageUrl: string;
 }
 /**
  * @generated from protobuf message nextTwirpTest.user.SaveUserInfoResponse
@@ -390,11 +394,12 @@ class SaveUserInfoRequest$Type extends MessageType<SaveUserInfoRequest> {
         super("nextTwirpTest.user.SaveUserInfoRequest", [
             { no: 1, name: "givenName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "familyName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "email", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 3, name: "email", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "imageUrl", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<SaveUserInfoRequest>): SaveUserInfoRequest {
-        const message = { givenName: "", familyName: "", email: "" };
+        const message = { givenName: "", familyName: "", email: "", imageUrl: "" };
         if (value !== undefined)
             reflectionMergePartial<SaveUserInfoRequest>(this, message, value);
         return message;
@@ -412,6 +417,9 @@ class SaveUserInfoRequest$Type extends MessageType<SaveUserInfoRequest> {
                     break;
                 case /* string email */ 3:
                     message.email = reader.string();
+                    break;
+                case /* string imageUrl */ 4:
+                    message.imageUrl = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -434,6 +442,9 @@ class SaveUserInfoRequest$Type extends MessageType<SaveUserInfoRequest> {
         /* string email = 3; */
         if (message.email !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.email);
+        /* string imageUrl = 4; */
+        if (message.imageUrl !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.imageUrl);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

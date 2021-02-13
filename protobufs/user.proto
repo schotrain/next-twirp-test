@@ -36,6 +36,7 @@ message SaveUserInfoRequest {
   string givenName = 1;
   string familyName = 2;
   string email = 3;
+  string imageUrl = 4;
 }
 
 message SaveUserInfoResponse {

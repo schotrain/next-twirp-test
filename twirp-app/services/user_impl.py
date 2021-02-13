@@ -111,6 +111,7 @@ class UserService(object):
                 givenName=saveUserInfoRequest.givenName,
                 familyName=saveUserInfoRequest.familyName,
                 email=saveUserInfoRequest.email,
+                imageUrl=saveUserInfoRequest.imageUrl,
                 identityProviderUsers=[
                     IdentityProviderUser(
                         provider=decoded_access_token[constants.IDENTITY_PROVIDER],

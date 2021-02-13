@@ -9,7 +9,9 @@
     "given-name": "Given Name",
     "family-name": "Family Name",
     "email": "Email",
+    "image-url": "Image URL",
     "save": "Save",
     "save-success": "Save completed successfully.",
-    "save-error": "There was an error. Save did not complete."
+    "save-error": "There was an error. Save did not complete.",
+    "register-blurb": "You have not yet registered with this application. Please confirm your information below and hit save to register."
 }

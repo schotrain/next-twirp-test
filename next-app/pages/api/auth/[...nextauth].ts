@@ -53,10 +53,12 @@ const options = {
         jwt: async (token, user, account, profile, isNewUser) => {
             const isSignIn = (user) ? true : false
             if (isSignIn) {
+                console.log(profile)
                 token.identityProvider = account.provider;
                 token.identityProviderId = account.id;
                 token.givenName = profile.given_name;
                 token.familyName = profile.family_name;
+                token.imageUrl = profile.picture;
             }
             token.rpcAccessToken = await getRpcAccessToken(token.identityProvider, token.identityProviderId)
             return Promise.resolve(token)
@@ -67,7 +69,8 @@ const options = {
                 identityProviderUser: {
                     ...session.user,
                     givenName: token.givenName,
-                    familyName: token.familyName
+                    familyName: token.familyName,
+                    imageUrl: token.imageUrl
                 },
                 rpcAccessToken: token.rpcAccessToken,
                 rpcUser: undefined

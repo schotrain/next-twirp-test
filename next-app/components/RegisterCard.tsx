@@ -12,19 +12,24 @@ const RegisterCard = (): JSX.Element => {
     const [givenName, setGivenName] = useState(authSession.identityProviderUser.givenName)
     const [familyName, setFamilyName] = useState(authSession.identityProviderUser.familyName)
     const [email, setEmail] = useState(authSession.identityProviderUser.email)
+    const [imageUrl, setImageUrl] = useState(authSession.identityProviderUser.imageUrl)
+    const [saving, setSaving] = useState(false)
 
     const saveUser = async () => {
         try {
-            console.log(authSession)
+            setSaving(true);
             const userClient = getUserClient(authSession.rpcAccessToken);
             await userClient.saveUserInfo({
                 familyName,
                 givenName,
-                email
+                email,
+                imageUrl
             })
             showToasterSuscessMessage(t('save-success'))
         } catch(ex) {
             showToasterErrorMessage(t('save-error'), ex)
+        } finally {
+            setSaving(false)
         }
     }
 
@@ -32,6 +37,7 @@ const RegisterCard = (): JSX.Element => {
             <div className="register-card">
             <Card interactive={false} elevation={Elevation.ONE}>
                 <H4>{t('register-new-user')}</H4>
+                <p>{t('register-blurb')}</p>
                 <FormGroup
                     label={t('given-name')}
                     labelFor="text-input"
@@ -50,8 +56,14 @@ const RegisterCard = (): JSX.Element => {
                 >
                     <InputGroup id="email" value={email} onChange={e => setEmail(e.target.value)} />
                 </FormGroup>
+                <FormGroup
+                    label={t('image-url')}
+                    labelFor="text-input"
+                >
+                    <InputGroup id="image-url" value={imageUrl} onChange={e => setImageUrl(e.target.value)} />
+                </FormGroup>
 
-                <Button disabled={!givenName || !familyName || !email} onClick={saveUser}>{t('save')}</Button>
+                <Button loading={saving} disabled={!givenName || !familyName || !email} onClick={saveUser}>{t('save')}</Button>
             </Card>
             <style jsx>{`
                 .register-card {
