@@ -11,9 +11,9 @@ export const Home = (): JSX.Element => {
   const [authSession, authLoading] = useSession();
 
   const callTwirp = async function () {
-    let client = getHaberdasherClient();
-    let call = await client.makeHat({ inches: 23 });
-    let response: Hat = call.response;
+    const client = getHaberdasherClient();
+    const call = await client.makeHat({ inches: 23 });
+    const response: Hat = call.response;
     return response;
   }
 

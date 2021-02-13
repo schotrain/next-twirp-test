@@ -1,7 +1,9 @@
-import { Button, Card, Elevation, FormGroup, H4, InputGroup } from "@blueprintjs/core"
+import { Button, Card, Elevation, FormGroup, H4, InputGroup, Intent } from "@blueprintjs/core"
 import { useSession } from "next-auth/client";
 import useTranslation from "next-translate/useTranslation"
 import { useState } from "react";
+import { showToasterErrorMessage, showToasterSuscessMessage } from "../lib/toaster";
+import { getUserClient } from "../rpc/twirpTransport";
 
 const RegisterCard = (): JSX.Element => {
     const { t, lang } = useTranslation('common')
@@ -11,8 +13,19 @@ const RegisterCard = (): JSX.Element => {
     const [familyName, setFamilyName] = useState(authSession.identityProviderUser.familyName)
     const [email, setEmail] = useState(authSession.identityProviderUser.email)
 
-    const saveUser = () => {
-        alert(`Creating ${givenName} ${familyName} ${email}`)
+    const saveUser = async () => {
+        try {
+            console.log(authSession)
+            const userClient = getUserClient(authSession.rpcAccessToken);
+            await userClient.saveUserInfo({
+                familyName,
+                givenName,
+                email
+            })
+            showToasterSuscessMessage(t('save-success'))
+        } catch(ex) {
+            showToasterErrorMessage(t('save-error'), ex)
+        }
     }
 
     return (

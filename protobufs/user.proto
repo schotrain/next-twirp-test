@@ -16,11 +16,6 @@ enum IdentityProvider {
   OKTA = 1;
 }
 
-service User {
-  rpc getAccessToken(GetAccessTokenRequest) returns (GetAccessTokenResponse);
-  rpc getUserInfo(GetUserInfoRequest) returns (GetUserInfoResponse);
-}
-
 message GetAccessTokenRequest {
   IdentityProvider identityProvider = 1;
   string identityProviderId = 2;
@@ -35,4 +30,20 @@ message GetUserInfoRequest {}
 
 message GetUserInfoResponse {
   UserInfo userInfo = 1;
+}
+
+message SaveUserInfoRequest {
+  string givenName = 1;
+  string familyName = 2;
+  string email = 3;
+}
+
+message SaveUserInfoResponse {
+  UserInfo userInfo = 1;
+}
+
+service User {
+  rpc getAccessToken(GetAccessTokenRequest) returns (GetAccessTokenResponse);
+  rpc getUserInfo(GetUserInfoRequest) returns (GetUserInfoResponse);
+  rpc saveUserInfo(SaveUserInfoRequest) returns (SaveUserInfoResponse);
 }

@@ -63,8 +63,6 @@ const options = {
         },
         // Custom logic that will pull values from our custom token into the session
         session: async (session, token) => {
-            const getUserInfoResp = await getUserClient(token.rpcAccessToken).getUserInfo({}).response
-
             const sessionObj = {
                 identityProviderUser: {
                     ...session.user,
@@ -74,14 +72,19 @@ const options = {
                 rpcAccessToken: token.rpcAccessToken,
                 rpcUser: undefined
             }
-            if (getUserInfoResp.userInfo) {
-                sessionObj.rpcUser = {
-                    id: getUserInfoResp.userInfo.id,
-                    email: getUserInfoResp.userInfo.email,
-                    givenName: getUserInfoResp.userInfo.givenName,
-                    familyName: getUserInfoResp.userInfo.familyName,
-                    imageUrl: getUserInfoResp.userInfo.imageUrl
+            try {
+                const getUserInfoResp = await getUserClient(token.rpcAccessToken).getUserInfo({})
+                if (getUserInfoResp.response.userInfo) {
+                    sessionObj.rpcUser = {
+                        id: getUserInfoResp.response.userInfo.id,
+                        email: getUserInfoResp.response.userInfo.email,
+                        givenName: getUserInfoResp.response.userInfo.givenName,
+                        familyName: getUserInfoResp.response.userInfo.familyName,
+                        imageUrl: getUserInfoResp.response.userInfo.imageUrl
+                    }
                 }
+            } catch (e) {
+                console.error(e);
             }
 
             return Promise.resolve(sessionObj)

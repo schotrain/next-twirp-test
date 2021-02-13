@@ -81,6 +81,32 @@ export interface GetUserInfoResponse {
     userInfo?: UserInfo;
 }
 /**
+ * @generated from protobuf message nextTwirpTest.user.SaveUserInfoRequest
+ */
+export interface SaveUserInfoRequest {
+    /**
+     * @generated from protobuf field: string givenName = 1;
+     */
+    givenName: string;
+    /**
+     * @generated from protobuf field: string familyName = 2;
+     */
+    familyName: string;
+    /**
+     * @generated from protobuf field: string email = 3;
+     */
+    email: string;
+}
+/**
+ * @generated from protobuf message nextTwirpTest.user.SaveUserInfoResponse
+ */
+export interface SaveUserInfoResponse {
+    /**
+     * @generated from protobuf field: nextTwirpTest.user.UserInfo userInfo = 1;
+     */
+    userInfo?: UserInfo;
+}
+/**
  * @generated from protobuf enum nextTwirpTest.user.IdentityProvider
  */
 export enum IdentityProvider {
@@ -105,6 +131,10 @@ export interface IUserClient {
      * @generated from protobuf rpc: getUserInfo(nextTwirpTest.user.GetUserInfoRequest) returns (nextTwirpTest.user.GetUserInfoResponse);
      */
     getUserInfo(input: GetUserInfoRequest, options?: RpcOptions): UnaryCall<GetUserInfoRequest, GetUserInfoResponse>;
+    /**
+     * @generated from protobuf rpc: saveUserInfo(nextTwirpTest.user.SaveUserInfoRequest) returns (nextTwirpTest.user.SaveUserInfoResponse);
+     */
+    saveUserInfo(input: SaveUserInfoRequest, options?: RpcOptions): UnaryCall<SaveUserInfoRequest, SaveUserInfoResponse>;
 }
 /**
  * Type for protobuf message nextTwirpTest.user.UserInfo
@@ -353,13 +383,118 @@ class GetUserInfoResponse$Type extends MessageType<GetUserInfoResponse> {
 }
 export const GetUserInfoResponse = new GetUserInfoResponse$Type();
 /**
+ * Type for protobuf message nextTwirpTest.user.SaveUserInfoRequest
+ */
+class SaveUserInfoRequest$Type extends MessageType<SaveUserInfoRequest> {
+    constructor() {
+        super("nextTwirpTest.user.SaveUserInfoRequest", [
+            { no: 1, name: "givenName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "familyName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "email", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<SaveUserInfoRequest>): SaveUserInfoRequest {
+        const message = { givenName: "", familyName: "", email: "" };
+        if (value !== undefined)
+            reflectionMergePartial<SaveUserInfoRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SaveUserInfoRequest): SaveUserInfoRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string givenName */ 1:
+                    message.givenName = reader.string();
+                    break;
+                case /* string familyName */ 2:
+                    message.familyName = reader.string();
+                    break;
+                case /* string email */ 3:
+                    message.email = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: SaveUserInfoRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string givenName = 1; */
+        if (message.givenName !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.givenName);
+        /* string familyName = 2; */
+        if (message.familyName !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.familyName);
+        /* string email = 3; */
+        if (message.email !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.email);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+export const SaveUserInfoRequest = new SaveUserInfoRequest$Type();
+/**
+ * Type for protobuf message nextTwirpTest.user.SaveUserInfoResponse
+ */
+class SaveUserInfoResponse$Type extends MessageType<SaveUserInfoResponse> {
+    constructor() {
+        super("nextTwirpTest.user.SaveUserInfoResponse", [
+            { no: 1, name: "userInfo", kind: "message", T: () => UserInfo }
+        ]);
+    }
+    create(value?: PartialMessage<SaveUserInfoResponse>): SaveUserInfoResponse {
+        const message = {};
+        if (value !== undefined)
+            reflectionMergePartial<SaveUserInfoResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SaveUserInfoResponse): SaveUserInfoResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* nextTwirpTest.user.UserInfo userInfo */ 1:
+                    message.userInfo = UserInfo.internalBinaryRead(reader, reader.uint32(), options, message.userInfo);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: SaveUserInfoResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* nextTwirpTest.user.UserInfo userInfo = 1; */
+        if (message.userInfo)
+            UserInfo.internalBinaryWrite(message.userInfo, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+export const SaveUserInfoResponse = new SaveUserInfoResponse$Type();
+/**
  * @generated from protobuf service nextTwirpTest.user.User
  */
 export class UserClient implements IUserClient {
     readonly typeName = "nextTwirpTest.user.User";
     readonly methods: MethodInfo[] = [
         { service: this, name: "getAccessToken", I: GetAccessTokenRequest, O: GetAccessTokenResponse },
-        { service: this, name: "getUserInfo", I: GetUserInfoRequest, O: GetUserInfoResponse }
+        { service: this, name: "getUserInfo", I: GetUserInfoRequest, O: GetUserInfoResponse },
+        { service: this, name: "saveUserInfo", I: SaveUserInfoRequest, O: SaveUserInfoResponse }
     ];
     constructor(private readonly _transport: RpcTransport) {
     }
@@ -370,5 +505,9 @@ export class UserClient implements IUserClient {
     getUserInfo(input: GetUserInfoRequest, options?: RpcOptions): UnaryCall<GetUserInfoRequest, GetUserInfoResponse> {
         const method = this.methods[1], opt = this._transport.mergeOptions(options), i = method.I.create(input);
         return stackIntercept<GetUserInfoRequest, GetUserInfoResponse>("unary", this._transport, method, opt, i);
+    }
+    saveUserInfo(input: SaveUserInfoRequest, options?: RpcOptions): UnaryCall<SaveUserInfoRequest, SaveUserInfoResponse> {
+        const method = this.methods[2], opt = this._transport.mergeOptions(options), i = method.I.create(input);
+        return stackIntercept<SaveUserInfoRequest, SaveUserInfoResponse>("unary", this._transport, method, opt, i);
     }
 }

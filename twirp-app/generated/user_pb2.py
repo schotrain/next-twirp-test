@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'Z\004user',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\nuser.proto\x12\x12nextTwirpTest.user\"^\n\x08UserInfo\x12\n\n\x02id\x18\x01 \x01(\t\x12\r\n\x05\x65mail\x18\x02 \x01(\t\x12\x11\n\tgivenName\x18\x03 \x01(\t\x12\x12\n\nfamilyName\x18\x04 \x01(\t\x12\x10\n\x08imageUrl\x18\x05 \x01(\t\"\x81\x01\n\x15GetAccessTokenRequest\x12>\n\x10identityProvider\x18\x01 \x01(\x0e\x32$.nextTwirpTest.user.IdentityProvider\x12\x1a\n\x12identityProviderId\x18\x02 \x01(\t\x12\x0c\n\x04hmac\x18\x03 \x01(\t\"-\n\x16GetAccessTokenResponse\x12\x13\n\x0b\x61\x63\x63\x65ssToken\x18\x01 \x01(\t\"\x14\n\x12GetUserInfoRequest\"E\n\x13GetUserInfoResponse\x12.\n\x08userInfo\x18\x01 \x01(\x0b\x32\x1c.nextTwirpTest.user.UserInfo*(\n\x10IdentityProvider\x12\n\n\x06GOOGLE\x10\x00\x12\x08\n\x04OKTA\x10\x01\x32\xcf\x01\n\x04User\x12g\n\x0egetAccessToken\x12).nextTwirpTest.user.GetAccessTokenRequest\x1a*.nextTwirpTest.user.GetAccessTokenResponse\x12^\n\x0bgetUserInfo\x12&.nextTwirpTest.user.GetUserInfoRequest\x1a\'.nextTwirpTest.user.GetUserInfoResponseB\x06Z\x04userb\x06proto3'
+  serialized_pb=b'\n\nuser.proto\x12\x12nextTwirpTest.user\"^\n\x08UserInfo\x12\n\n\x02id\x18\x01 \x01(\t\x12\r\n\x05\x65mail\x18\x02 \x01(\t\x12\x11\n\tgivenName\x18\x03 \x01(\t\x12\x12\n\nfamilyName\x18\x04 \x01(\t\x12\x10\n\x08imageUrl\x18\x05 \x01(\t\"\x81\x01\n\x15GetAccessTokenRequest\x12>\n\x10identityProvider\x18\x01 \x01(\x0e\x32$.nextTwirpTest.user.IdentityProvider\x12\x1a\n\x12identityProviderId\x18\x02 \x01(\t\x12\x0c\n\x04hmac\x18\x03 \x01(\t\"-\n\x16GetAccessTokenResponse\x12\x13\n\x0b\x61\x63\x63\x65ssToken\x18\x01 \x01(\t\"\x14\n\x12GetUserInfoRequest\"E\n\x13GetUserInfoResponse\x12.\n\x08userInfo\x18\x01 \x01(\x0b\x32\x1c.nextTwirpTest.user.UserInfo\"K\n\x13SaveUserInfoRequest\x12\x11\n\tgivenName\x18\x01 \x01(\t\x12\x12\n\nfamilyName\x18\x02 \x01(\t\x12\r\n\x05\x65mail\x18\x03 \x01(\t\"F\n\x14SaveUserInfoResponse\x12.\n\x08userInfo\x18\x01 \x01(\x0b\x32\x1c.nextTwirpTest.user.UserInfo*(\n\x10IdentityProvider\x12\n\n\x06GOOGLE\x10\x00\x12\x08\n\x04OKTA\x10\x01\x32\xb2\x02\n\x04User\x12g\n\x0egetAccessToken\x12).nextTwirpTest.user.GetAccessTokenRequest\x1a*.nextTwirpTest.user.GetAccessTokenResponse\x12^\n\x0bgetUserInfo\x12&.nextTwirpTest.user.GetUserInfoRequest\x1a\'.nextTwirpTest.user.GetUserInfoResponse\x12\x61\n\x0csaveUserInfo\x12\'.nextTwirpTest.user.SaveUserInfoRequest\x1a(.nextTwirpTest.user.SaveUserInfoResponseB\x06Z\x04userb\x06proto3'
 )
 
 _IDENTITYPROVIDER = _descriptor.EnumDescriptor(
@@ -43,8 +43,8 @@ _IDENTITYPROVIDER = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=402,
-  serialized_end=442,
+  serialized_start=551,
+  serialized_end=591,
 )
 _sym_db.RegisterEnumDescriptor(_IDENTITYPROVIDER)
 
@@ -248,13 +248,94 @@ _GETUSERINFORESPONSE = _descriptor.Descriptor(
   serialized_end=400,
 )
 
+
+_SAVEUSERINFOREQUEST = _descriptor.Descriptor(
+  name='SaveUserInfoRequest',
+  full_name='nextTwirpTest.user.SaveUserInfoRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='givenName', full_name='nextTwirpTest.user.SaveUserInfoRequest.givenName', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='familyName', full_name='nextTwirpTest.user.SaveUserInfoRequest.familyName', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='email', full_name='nextTwirpTest.user.SaveUserInfoRequest.email', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=402,
+  serialized_end=477,
+)
+
+
+_SAVEUSERINFORESPONSE = _descriptor.Descriptor(
+  name='SaveUserInfoResponse',
+  full_name='nextTwirpTest.user.SaveUserInfoResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='userInfo', full_name='nextTwirpTest.user.SaveUserInfoResponse.userInfo', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=479,
+  serialized_end=549,
+)
+
 _GETACCESSTOKENREQUEST.fields_by_name['identityProvider'].enum_type = _IDENTITYPROVIDER
 _GETUSERINFORESPONSE.fields_by_name['userInfo'].message_type = _USERINFO
+_SAVEUSERINFORESPONSE.fields_by_name['userInfo'].message_type = _USERINFO
 DESCRIPTOR.message_types_by_name['UserInfo'] = _USERINFO
 DESCRIPTOR.message_types_by_name['GetAccessTokenRequest'] = _GETACCESSTOKENREQUEST
 DESCRIPTOR.message_types_by_name['GetAccessTokenResponse'] = _GETACCESSTOKENRESPONSE
 DESCRIPTOR.message_types_by_name['GetUserInfoRequest'] = _GETUSERINFOREQUEST
 DESCRIPTOR.message_types_by_name['GetUserInfoResponse'] = _GETUSERINFORESPONSE
+DESCRIPTOR.message_types_by_name['SaveUserInfoRequest'] = _SAVEUSERINFOREQUEST
+DESCRIPTOR.message_types_by_name['SaveUserInfoResponse'] = _SAVEUSERINFORESPONSE
 DESCRIPTOR.enum_types_by_name['IdentityProvider'] = _IDENTITYPROVIDER
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -293,6 +374,20 @@ GetUserInfoResponse = _reflection.GeneratedProtocolMessageType('GetUserInfoRespo
   })
 _sym_db.RegisterMessage(GetUserInfoResponse)
 
+SaveUserInfoRequest = _reflection.GeneratedProtocolMessageType('SaveUserInfoRequest', (_message.Message,), {
+  'DESCRIPTOR' : _SAVEUSERINFOREQUEST,
+  '__module__' : 'user_pb2'
+  # @@protoc_insertion_point(class_scope:nextTwirpTest.user.SaveUserInfoRequest)
+  })
+_sym_db.RegisterMessage(SaveUserInfoRequest)
+
+SaveUserInfoResponse = _reflection.GeneratedProtocolMessageType('SaveUserInfoResponse', (_message.Message,), {
+  'DESCRIPTOR' : _SAVEUSERINFORESPONSE,
+  '__module__' : 'user_pb2'
+  # @@protoc_insertion_point(class_scope:nextTwirpTest.user.SaveUserInfoResponse)
+  })
+_sym_db.RegisterMessage(SaveUserInfoResponse)
+
 
 DESCRIPTOR._options = None
 
@@ -303,8 +398,8 @@ _USER = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=445,
-  serialized_end=652,
+  serialized_start=594,
+  serialized_end=900,
   methods=[
   _descriptor.MethodDescriptor(
     name='getAccessToken',
@@ -323,6 +418,16 @@ _USER = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_GETUSERINFOREQUEST,
     output_type=_GETUSERINFORESPONSE,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='saveUserInfo',
+    full_name='nextTwirpTest.user.User.saveUserInfo',
+    index=2,
+    containing_service=None,
+    input_type=_SAVEUSERINFOREQUEST,
+    output_type=_SAVEUSERINFORESPONSE,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),

@@ -30,6 +30,13 @@ class UserServer(TwirpServer):
 				input=_sym_db.GetSymbol("nextTwirpTest.user.GetUserInfoRequest"),
 				output=_sym_db.GetSymbol("nextTwirpTest.user.GetUserInfoResponse"),
 			),
+			"saveUserInfo": Endpoint(
+				service_name="User",
+				name="saveUserInfo",
+				function=getattr(service, "saveUserInfo"),
+				input=_sym_db.GetSymbol("nextTwirpTest.user.SaveUserInfoRequest"),
+				output=_sym_db.GetSymbol("nextTwirpTest.user.SaveUserInfoResponse"),
+			),
 		}
 
 class UserClient(TwirpClient):
@@ -49,5 +56,14 @@ class UserClient(TwirpClient):
 			ctx=ctx,
 			request=request,
 			response_obj=_sym_db.GetSymbol("nextTwirpTest.user.GetUserInfoResponse"),
+			**kwargs,
+		)
+
+	def saveUserInfo(self, *args, ctx, request, server_path_prefix="/twirp", **kwargs):
+		return self._make_request(
+			url=F"{server_path_prefix}/nextTwirpTest.user.User/saveUserInfo",
+			ctx=ctx,
+			request=request,
+			response_obj=_sym_db.GetSymbol("nextTwirpTest.user.SaveUserInfoResponse"),
 			**kwargs,
 		)
