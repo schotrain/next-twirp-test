@@ -52,7 +52,7 @@ class UserService(object):
         return user_pb2.GetAccessTokenResponse(accessToken=encoded_jwt)
 
 
-    def userToPBUserInfo(self, user: models.User) -> user_pb2.UserInfo:
+    def _userToPBUserInfo(self, user: models.User) -> user_pb2.UserInfo:
         return user_pb2.UserInfo(
             id=str(user.id),
             email=user.email,
@@ -75,14 +75,14 @@ class UserService(object):
 
         db_session = getDbSession()
 
-        user = queries.get_user_from_idp_login(
+        idp_user = queries.find_identity_provider_user(
             db_session,
             decoded_access_token[constants.IDENTITY_PROVIDER],
             decoded_access_token[constants.IDENTITY_PROVIDER_ID],
         )
 
-        if user:
-            user_info = self.userToPBUserInfo(user)
+        if idp_user:
+            user_info = self._userToPBUserInfo(idp_user.user)
         else:
             user_info = None
 
@@ -100,13 +100,13 @@ class UserService(object):
 
         db_session = getDbSession()
 
-        user = queries.get_user_from_idp_login(
+        idp_user = queries.find_identity_provider_user(
             db_session,
             decoded_access_token[constants.IDENTITY_PROVIDER],
             decoded_access_token[constants.IDENTITY_PROVIDER_ID],
         )
 
-        if not user:
+        if not idp_user:
             user = models.User(
                 givenName=saveUserInfoRequest.givenName,
                 familyName=saveUserInfoRequest.familyName,
@@ -122,10 +122,11 @@ class UserService(object):
             )
             db_session.add(user)
         else:
+            user = idp_user.user
             user.givenName = saveUserInfoRequest.givenName
             user.familyName = saveUserInfoRequest.familyName
             user.email = saveUserInfoRequest.email
 
         db_session.commit()
 
-        return user_pb2.SaveUserInfoResponse(userInfo=self.userToPBUserInfo(user))
+        return user_pb2.SaveUserInfoResponse(userInfo=self._userToPBUserInfo(user))

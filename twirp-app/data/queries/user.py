@@ -3,7 +3,7 @@ from sqlalchemy import and_
 from sqlalchemy.orm.session import Session
 
 
-def get_user_from_idp_login(
+def find_identity_provider_user(
     db_session: Session, identity_provider: str, identity_provider_id: str
 ) -> models.User:
     idp_user = (
@@ -16,7 +16,4 @@ def get_user_from_idp_login(
         )
         .first()
     )
-    if idp_user:
-        return idp_user.user
-    else:
-        return None
+    return idp_user
